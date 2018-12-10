@@ -1,10 +1,12 @@
 package sample;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlanszaGwiazda {
-    public int[][] pola = new int[3][5];
+    public int[][] pola = new int[17][25];
     public ArrayList<Pionek> pionki = new ArrayList<Pionek>();
+    int liczbaGraczy;
 
     public PlanszaGwiazda(){
         stworzPola();
@@ -13,18 +15,84 @@ public class PlanszaGwiazda {
     }
 
     private void stworzPola(){
-        for (int i =0; i < 3; i++){
-          for(int j=0; j < 5; j++){
-              pola[i][j] = -1;
-          }
+        //wypelnianie jedynkami
+        pola[0][12] = 1;
+        pola[1][11] = 1; pola[1][13] = 1;
+        pola[2][10] = 1; pola[2][12] = 1; pola[2][14] = 1;
+        pola[3][9] = 1; pola[3][11] = 1; pola[3][13] = 1; pola[3][15] = 1;
+
+        pola[13][9] = 1; pola[13][11] = 1; pola[13][13] = 1; pola[13][15] = 1;
+        pola[14][10] = 1; pola[14][12] = 1; pola[14][14] = 1;
+        pola[15][11] = 1; pola[15][13] = 1;
+        pola[16][12] = 1;
+
+        //wypelnianie reszty pol 2 i 0
+        for (int i = 0; i < 17; i++){
+            for(int j = 0; j < 25; j++) {
+                if(i == 0 || i == 16) {
+                    if (pola[i][j]!=1)
+                        pola[i][j] = 2;
+                }
+                if(i == 1 || i == 15) {
+                    if (pola[i][j]!=1)
+                        pola[i][j] = 2;
+                }
+                if(i == 2 || i == 14) {
+                    if (pola[i][j]!=1)
+                        pola[i][j] = 2;
+                }
+                if(i == 3 || i == 13) {
+                    if (pola[i][j]!=1)
+                        pola[i][j] = 2;
+                }
+                if(i == 4 || i == 12) {
+                    if (j % 2 == 0) {
+                        pola[i][j] = 0;
+                    } else {
+                        pola[i][j] = 2;
+                    }
+                }
+                if(i == 5 || i == 11){
+                    if(j%2==1) {
+                        pola[i][j] = 0;
+                    } else {
+                        pola[i][j] = 2;
+                    }
+                }
+                if(i == 6 || i == 10){
+                    if(j%2==0 && j > 1 && j < 23) {
+                        pola[i][j] = 0;
+                    } else {
+                        pola[i][j] = 2;
+                    }
+                }
+                if(i == 7 || i == 9){
+                    if(j%2==1 && j > 2 && j < 22) {
+                        pola[i][j] = 0;
+                    } else {
+                        pola[i][j] = 2;
+                    }
+                }
+                if(i == 8) {
+                    if(j%2==0 && j > 3 && j < 21) {
+                        pola[i][j] = 0;
+                    } else {
+                        pola[i][j] = 2;
+                    }
+                }
+            }
         }
-        //tu trzeba algorytm do uzupelniania planszy
-        pola[0][2] = 0;
-        pola[1][1] = 0;
-        pola[1][3] = 0;
-        pola[2][0] = 0;
-        pola[2][2] = 0;
-        pola[2][4] = 0;
+
+        for(int i = 0; i < 17; i++){
+            String s = "";
+            for(int j = 0; j < 25; j++){
+                s+=pola[i][j];
+                if(j%24==0 && j!=0) {
+                    System.out.println(s);
+                }
+            }
+        }
+
     }
     private void stworzPionki(){
         pionki.add(new Pionek(1));
@@ -91,6 +159,11 @@ public class PlanszaGwiazda {
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");
         }
+    }
+
+    private int losujGracza(int liczbaGraczy){
+        Random generator = new Random();
+        return generator.nextInt(liczbaGraczy)+1;
     }
 
 }
