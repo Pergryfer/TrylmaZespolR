@@ -1,5 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:controller="sample.Controller"
-            xmlns:fx="http://javafx.com/fxml">
-</BorderPane>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="680.0" prefWidth="1000.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#ff2600" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#ff2600" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="50.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#ff2600" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#ff2600" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff2600" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="130.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#3e7dbc" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3e7dbc" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3d7cba" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3d7cba" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="705.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="780.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#3e7dbc" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3e7dbc" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3e7dbc" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="210.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#3e7dbc" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#3e7dbc" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="555.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="250.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#3e7dbc" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="530.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="555.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#f7ff11" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#dee6ee" layoutX="490.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="530.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="555.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#4eb84c" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="530.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="555.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="250.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#4eb84c" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="555.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="210.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#4eb84c" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="705.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="170.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#4eb84c" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#4eb84c" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="555.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="580.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="580.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="605.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="605.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#dee6ee" layoutX="630.0" layoutY="30.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="630.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="705.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="730.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="680.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="755.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="705.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#ff32b7" layoutX="780.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="130.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#00e9ff" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="530.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="555.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#00e9ff" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox layoutX="505.0" layoutY="10.0" prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="530.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="50.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#00e9ff" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <VBox prefHeight="40.0" prefWidth="10.0" />
+                  <Circle fill="#00e9ff" layoutX="490.0" layoutY="30.0" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Circle fill="#00e9ff" opacity="0.33" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>
