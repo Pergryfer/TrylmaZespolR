@@ -9,40 +9,29 @@ public class PlanszaGwiazda {
     int liczbaGraczy;
 
     public PlanszaGwiazda(){
-        stworzPola();
         stworzPionki();
         dodajPionki();
+        stworzPola();
     }
 
     private void stworzPola(){
-        //wypelnianie jedynkami
-        pola[0][12] = 1;
-        pola[1][11] = 1; pola[1][13] = 1;
-        pola[2][10] = 1; pola[2][12] = 1; pola[2][14] = 1;
-        pola[3][9] = 1; pola[3][11] = 1; pola[3][13] = 1; pola[3][15] = 1;
-
-        pola[13][9] = 1; pola[13][11] = 1; pola[13][13] = 1; pola[13][15] = 1;
-        pola[14][10] = 1; pola[14][12] = 1; pola[14][14] = 1;
-        pola[15][11] = 1; pola[15][13] = 1;
-        pola[16][12] = 1;
-
         //wypelnianie reszty pol 2 i 0
         for (int i = 0; i < 17; i++){
             for(int j = 0; j < 25; j++) {
                 if(i == 0 || i == 16) {
-                    if (pola[i][j]!=1)
+                    if (pola[i][j]<1)
                         pola[i][j] = 2;
                 }
                 if(i == 1 || i == 15) {
-                    if (pola[i][j]!=1)
+                    if (pola[i][j]<1)
                         pola[i][j] = 2;
                 }
                 if(i == 2 || i == 14) {
-                    if (pola[i][j]!=1)
+                    if (pola[i][j]<1)
                         pola[i][j] = 2;
                 }
                 if(i == 3 || i == 13) {
-                    if (pola[i][j]!=1)
+                    if (pola[i][j]<1)
                         pola[i][j] = 2;
                 }
                 if(i == 4 || i == 12) {
@@ -82,7 +71,23 @@ public class PlanszaGwiazda {
                 }
             }
         }
+        /*
+        for (int i =0; i < 17; i++){
+            for(int j=0; j < 25; j++){
+                if(pola[i][j] == 2){
+                    System.out.print("---");
+                }else {
+                    if (pola[i][j] == 0) {
+                        System.out.print("[_]");
+                    }else{
+                        System.out.print("[" + pola[i][j] + "]");
+                    }
+                }
+            }
+            System.out.println();
+        } */
 
+        /*
         for(int i = 0; i < 17; i++){
             String s = "";
             for(int j = 0; j < 25; j++){
@@ -91,18 +96,28 @@ public class PlanszaGwiazda {
                     System.out.println(s);
                 }
             }
-        }
+        }*/
 
     }
-    private void stworzPionki(){
-        pionki.add(new Pionek(1));
-        pionki.add(new Pionek(2));
-    }
-    private void dodajPionki(){
-        if(pola[0][2] != -1){
-            pola[1][1] = pionki.get(0).id;
-            pola[1][3] = pionki.get(1).id;
+    private void stworzPionki() {
+        for (int i = 10; i < 20; i++) {
+            pionki.add(new Pionek(i));
         }
+        for (int i = 20; i < 30; i++) {
+            pionki.add(new Pionek(i));
+        }
+    }
+
+    private void dodajPionki(){
+            pola[0][12] = pionki.get(0).id;
+            pola[1][11] = pionki.get(1).id; pola[1][13] = pionki.get(2).id;
+            pola[2][10] = pionki.get(3).id; pola[2][12] = pionki.get(4).id; pola[2][14] = pionki.get(5).id;
+            pola[3][9] = pionki.get(6).id; pola[3][11] = pionki.get(7).id; pola[3][13] = pionki.get(8).id; pola[3][15] = pionki.get(9).id;
+
+            pola[13][9] = pionki.get(10).id; pola[13][11] = pionki.get(11).id; pola[13][13] = pionki.get(12).id; pola[13][15] = pionki.get(13).id;
+            pola[14][10] = pionki.get(14).id; pola[14][12] = pionki.get(15).id; pola[14][14] = pionki.get(16).id;
+            pola[15][11] = pionki.get(17).id; pola[15][13] = pionki.get(18).id;
+            pola[16][12] = pionki.get(19).id;
     }
 
     private boolean czyDostepnePole(int rzad1, int kol1, int rzad2, int kol2 ){
