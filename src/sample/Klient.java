@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Klient {
+
     public static void main(String[] args) throws IOException{
         String serverAdress = JOptionPane.showInputDialog("Enter IP Addres of a machine that is \n" +
         "running the date service on port 9090:");

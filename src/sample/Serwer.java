@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.util.Date;
 
 public class Serwer {
-
     public static void main(String[] args) throws IOException{
         ServerSocket serverSocket = new ServerSocket(9090);
         try {
