@@ -45,6 +45,7 @@ public class Main extends Application {
     }
 
     private Pane stworzOkno(){
+        //wypelnianie okna polami
         Pane pane = new Pane();
         pane.setPrefSize(1000,680);
 
@@ -173,10 +174,10 @@ public class Main extends Application {
                 k++;
             }
         }
-        Circle c = new Circle(20);
-        pola.get(0).getChildren().add(c);
-        c.setCenterX(pola.get(0).getCenterX());
-        c.setCenterY(pola.get(0).getCenterY());
+        Pionek pionek = new Pionek(11, 20);
+        pola.get(0).getChildren().add(pionek);
+        pionek.setCenterX(pola.get(0).getCenterX());
+        pionek.setCenterY(pola.get(0).getCenterY());
 
         vBox.getChildren().addAll(lista);
         pane.getChildren().add(vBox);
