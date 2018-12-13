@@ -4,7 +4,7 @@ import javafx.scene.shape.Circle;
 
 public class Pionek extends Circle{
     int id;
-    public static int
+    public static int kliknietyPionek;
 
 
     public Pionek(int id) {
@@ -17,6 +17,7 @@ public class Pionek extends Circle{
         this.id = id;
         this.setOnMouseClicked((event) -> {
             System.out.println(this);
+            kliknietyPionek = this.id;
         });
     }
 }
