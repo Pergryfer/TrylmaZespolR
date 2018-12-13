@@ -1,8 +1,11 @@
 package sample;
 
-public class Pionek {
+import javafx.scene.shape.Circle;
+
+public class Pionek extends Circle{
     int id;
     public Pionek( int id) {
+        super();
         this.id = id;
     }
 }
