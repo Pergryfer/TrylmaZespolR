@@ -1,4 +1,4 @@
-package sample;
+package serwer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,13 +8,14 @@ import java.util.Date;
 
 public class Serwer {
     public static void main(String[] args) throws IOException{
+        System.out.println("Serwer wlaczony!");
         ServerSocket serverSocket = new ServerSocket(9090);
         try {
             while(true) {
                 Socket socket = serverSocket.accept();
                 try {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                    out.println(new Date().toString());
+                    out.println("Udalo się zalogowac!");
                 } finally {
                     socket.close();
                 }
