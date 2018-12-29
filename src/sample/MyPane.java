@@ -2,6 +2,7 @@ package sample;
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class MyPane extends Pane {
     private String miejsce;
@@ -501,6 +502,31 @@ public class MyPane extends Pane {
                 this.y = 112;
                 break;
         }
+
+        this.setOnMouseClicked((event) -> {
+            Pionek pion = null;
+            int klikniety = Pionek.kliknietyPionek;
+            if(klikniety > 9) {
+                for (int i = 0; i < Main.pionki.size(); i++) {
+                    if (Main.pionki.get(i).id == klikniety) {
+                        pion = Main.pionki.get(i).getIt();
+                    }
+                }
+                MyPane pane = (MyPane) pion.getParent();
+                if(PlanszaGwiazda.czyDostepnePole(pane.getXX(), pane.getYY(), this.x, this.y)){
+                    PlanszaGwiazda.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y);
+                    pane.getChildren().remove(pion);
+                    this.getChildren().add(pion);
+                    pion.setCenterX(this.getCenterX());
+                    pion.setCenterY(this.getCenterY());
+
+                }
+                /*pane.getChildren().remove(pion);
+                this.getChildren().add(pion);
+                pion.setCenterX(this.getCenterX());
+                pion.setCenterY(this.getCenterY());*/
+            }
+        });
     }
 
     public String getMiejsce() {
@@ -516,18 +542,18 @@ public class MyPane extends Pane {
     //Funkcje zwracajace srodek pola w okienku
 
     public double getCenterX(){
-        return this.getLayoutX()+20;
+        return this.getTranslateX()+20;
     }
 
     public double getCenterY(){
-        return this.getLayoutY()+20;
+        return this.getTranslateY()+20;
     }
 
-    public int getX() {
+    public int getXX() {
         return x;
     }
 
-    public int getY() {
+    public int getYY() {
         return y;
     }
 }

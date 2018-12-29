@@ -19,9 +19,11 @@ public class Main extends Application {
 
     static ArrayList<MyPane> pola = new ArrayList<MyPane>();
     static ArrayList<HBox> lista = new ArrayList<HBox>();
+    static ArrayList<Pionek> pionki = new ArrayList<Pionek>();
+    static PlanszaGwiazda planszaGwiazda;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
@@ -36,29 +38,26 @@ public class Main extends Application {
     }
 
 
-
-
-
     public static void main(String[] args) {
+        planszaGwiazda = new PlanszaGwiazda();
         launch(args);
-        PlanszaGwiazda planszaGwiazda = new PlanszaGwiazda();
     }
 
-    private Pane stworzOkno(){
+    private Pane stworzOkno() {
         //wypelnianie okna polami
         Pane pane = new Pane();
-        pane.setPrefSize(1000,680);
+        pane.setPrefSize(1000, 680);
 
         VBox vBox = new VBox();
-        vBox.setPrefSize(1000,680);
+        vBox.setPrefSize(1000, 680);
         int k = 0;
         int l = 0;
-        for(int i = 0; i < 121; i++){
+        for (int i = 0; i < 121; i++) {
             pola.add(new MyPane(Integer.toString(i)));
-            if(i == 0){
+            if (i == 0) {
                 lista.add(new HBox());
                 lista.get(k).setAlignment(Pos.TOP_CENTER);
-                lista.get(k).setPrefSize(1000,40);
+                lista.get(k).setPrefSize(1000, 40);
                 lista.get(k).getChildren().add(pola.get(0));
                 k++;
             } else if (i == 2) {
@@ -174,16 +173,52 @@ public class Main extends Application {
                 k++;
             }
         }
-        Pionek pionek = new Pionek(11, 20);
-        pola.get(0).getChildren().add(pionek);
-        pionek.setCenterX(pola.get(0).getCenterX());
-        pionek.setCenterY(pola.get(0).getCenterY());
+
+        int indeks = 10;
+
+
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 25; j++) {
+                if (planszaGwiazda.pola[i][j] == indeks) {
+                    pionki.add(new Pionek(indeks, 20));
+                    Pionek p = szukajPionka(indeks);
+                    int tmp = szukajPola(i, j);
+                    pola.get(tmp).getChildren().add(p);
+                    p.setCenterX(pola.get(tmp).getCenterX());
+                    p.setCenterY(pola.get(tmp).getCenterY());
+                    indeks++;
+                }
+            }
+        }
+        Pionek last = new Pionek(29, 20);
+        pionki.add(last);
+        pola.get(120).getChildren().add(last);
+        last.setCenterX(pola.get(120).getCenterX());
+        last.setCenterY(pola.get(120).getCenterY());
+
 
         vBox.getChildren().addAll(lista);
         pane.getChildren().add(vBox);
 
 
-
         return pane;
+    }
+
+    private int szukajPola(int x, int y) {
+        for (int i = 0; i < pola.size(); i++) {
+            if (pola.get(i).getXX() == x && pola.get(i).getYY() == y) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private Pionek szukajPionka(int ind){
+        for(int i = 0; i < pionki.size(); i++){
+            if(pionki.get(i).id == ind){
+                return pionki.get(i);
+            }
+        }
+        return null;
     }
 }
