@@ -135,37 +135,37 @@ public class PlanszaGwiazda {
         }
         //czy jest wykonywany ruch z przeskokiem
         if(((kol2 == kol1 + 2) && (rzad2 == rzad1 + 2))){
-            if(pola[rzad2-1][kol2-1] > 0) {
+            if(pola[rzad2-1][kol2-1] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
         }
         if(((kol2 == kol1 - 2) && (rzad2 == rzad1 - 2))){
-            if(pola[rzad2+1][kol2+1] > 0) {
+            if(pola[rzad2+1][kol2+1] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
         }
         if(((kol2 == kol1 + 2) && (rzad2 == rzad1 - 2))){
-            if(pola[rzad2+1][kol2-1] > 0) {
+            if(pola[rzad2+1][kol2-1] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
         }
         if(((kol2 == kol1 - 2) && (rzad2 == rzad1 + 2))){
-            if(pola[rzad2-1][kol2+1] > 0) {
+            if(pola[rzad2-1][kol2+1] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
         }
         if(((kol2 == kol1 - 4) && (rzad2 == rzad1))){
-            if(pola[rzad2-1][kol2+1] > 0) {
+            if(pola[rzad2][kol2+2] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
         }
         if(((kol2 == kol1 + 4) && (rzad2 == rzad1))){
-            if(pola[rzad2-1][kol2+1] > 0) {
+            if(pola[rzad2][kol2-2] > 2) {
                 System.out.println("wykonywanie przeskoku");
                 return true;
             }
