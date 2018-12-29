@@ -158,11 +158,22 @@ public class PlanszaGwiazda {
                 return true;
             }
         }
+        if(((kol2 == kol1 - 4) && (rzad2 == rzad1))){
+            if(pola[rzad2-1][kol2+1] > 0) {
+                System.out.println("wykonywanie przeskoku");
+                return true;
+            }
+        }
+        if(((kol2 == kol1 + 4) && (rzad2 == rzad1))){
+            if(pola[rzad2-1][kol2+1] > 0) {
+                System.out.println("wykonywanie przeskoku");
+                return true;
+            }
+        }
         //czy  nie wybrano odpowiednie pole do ruchu
-        if(!((kol2 == kol1 + 1) && (rzad2 == rzad1 + 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 + 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 + 1))){
+        if(!((kol2 == kol1 + 1) && (rzad2 == rzad1 + 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 + 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 + 1)) && !((rzad1 == rzad2) && (kol2 == kol1 - 2))  && !((rzad1 == rzad2) && (kol2 == kol1 + 2))){
             return false;
         }
-
 
         return true;
     }
