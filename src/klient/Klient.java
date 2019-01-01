@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -23,9 +24,9 @@ public class Klient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("klientFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 1000, 680));
+        primaryStage.setScene(new Scene(root, 400, 140));
         primaryStage.show();
     }
 
@@ -33,12 +34,9 @@ public class Klient extends Application {
 
     }
     public static void polaczDoSerwera() throws IOException{
-        String serverAdress = JOptionPane.showInputDialog("Logowanie do serwera \n" +
-                "na porcie 9090:");
-        Socket s = new Socket(serverAdress, 9090);
+        Socket s = new Socket(InetAddress.getLocalHost(), 9090);
         BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
         String answer = input.readLine();
-        JOptionPane.showMessageDialog(null, answer);
     }
 
 

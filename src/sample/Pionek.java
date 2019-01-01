@@ -18,7 +18,6 @@ public class Pionek extends Circle{
         super(promien);
         this.id = id;
         this.setOnMouseClicked((event) -> {
-            //System.out.println(this.x + " " + this.y);
             kliknietyPionek = this.id;
         });
     }
@@ -26,5 +25,9 @@ public class Pionek extends Circle{
 
     public Pionek getIt(){
         return this;
+    }
+
+    public int getIdd(){
+        return id;
     }
 }

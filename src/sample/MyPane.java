@@ -4,10 +4,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import static javafx.scene.paint.Color.YELLOWGREEN;
+
 public class MyPane extends Pane {
     private String miejsce;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public MyPane(String miejsce){
         //nie patrz na to XD, przypisuje im indexy w zaleznosci od numerku na planszy XD
@@ -499,19 +501,16 @@ public class MyPane extends Pane {
                 break;
             case "120":
                 this.x = 16;
-                this.y = 112;
+                this.y = 12;
                 break;
         }
 
         this.setOnMouseClicked((event) -> {
             Pionek pion = null;
+            //System.out.println(this.getChildren().get(0).getId() + "\n" + this.getChildren().get(1).getId() + "\n" + this.getMiejsce());
             int klikniety = Pionek.kliknietyPionek;
-            if(klikniety > 9) {
-                for (int i = 0; i < Main.pionki.size(); i++) {
-                    if (Main.pionki.get(i).id == klikniety) {
-                        pion = Main.pionki.get(i).getIt();
-                    }
-                }
+            if(klikniety > 9 && this.getChildren().size() == 0) {
+                pion = Main.szukajPionka(klikniety);
                 MyPane pane = (MyPane) pion.getParent();
                 if(PlanszaGwiazda.czyDostepnePole(pane.getXX(), pane.getYY(), this.x, this.y)){
                     PlanszaGwiazda.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y);
@@ -519,12 +518,7 @@ public class MyPane extends Pane {
                     this.getChildren().add(pion);
                     pion.setCenterX(this.getCenterX());
                     pion.setCenterY(this.getCenterY());
-
                 }
-                /*pane.getChildren().remove(pion);
-                this.getChildren().add(pion);
-                pion.setCenterX(this.getCenterX());
-                pion.setCenterY(this.getCenterY());*/
             }
         });
     }

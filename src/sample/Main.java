@@ -50,8 +50,9 @@ public class Main extends Application {
 
         VBox vBox = new VBox();
         vBox.setPrefSize(1000, 680);
+
         int k = 0;
-        int l = 0;
+
         for (int i = 0; i < 121; i++) {
             pola.add(new MyPane(Integer.toString(i)));
             if (i == 0) {
@@ -174,13 +175,15 @@ public class Main extends Application {
             }
         }
 
+        kolorujPola();
+
         int indeks = 10;
 
 
         for (int i = 0; i < 17; i++) {
             for (int j = 0; j < 25; j++) {
                 if (planszaGwiazda.pola[i][j] == indeks) {
-                    pionki.add(new Pionek(indeks, 20));
+                    pionki.add(new Pionek(indeks, 19));
                     Pionek p = szukajPionka(indeks);
                     int tmp = szukajPola(i, j);
                     pola.get(tmp).getChildren().add(p);
@@ -190,11 +193,9 @@ public class Main extends Application {
                 }
             }
         }
-        Pionek last = new Pionek(29, 20);
-        pionki.add(last);
-        pola.get(120).getChildren().add(last);
-        last.setCenterX(pola.get(120).getCenterX());
-        last.setCenterY(pola.get(120).getCenterY());
+
+
+        kolorujPionki();
 
 
         vBox.getChildren().addAll(lista);
@@ -213,12 +214,41 @@ public class Main extends Application {
         return 0;
     }
 
-    private Pionek szukajPionka(int ind){
+    public static Pionek szukajPionka(int ind){
         for(int i = 0; i < pionki.size(); i++){
             if(pionki.get(i).id == ind){
                 return pionki.get(i);
             }
         }
         return null;
+    }
+
+    private void kolorujPola(){
+        for(int i = 0; i < 121; i++){
+            if(i < 10){
+                pola.get(i).setStyle("-fx-background-color: rgba(255, 0, 0, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+            } else if(i < 14 || i > 22 && i < 26 || i > 34 && i < 37 || i == 46){
+                pola.get(i).setStyle("-fx-background-color: rgba(61, 125, 186, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+            } else if( i > 18 && i < 23 || i > 31 && i < 35 || i > 43 && i < 46 || i == 55) {
+                pola.get(i).setStyle("-fx-background-color: rgba(247, 255, 17, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+            } else if( i == 65 || i > 74 && i < 77 || i > 85 && i < 89 || i > 97 && i < 102) {
+                pola.get(i).setStyle("-fx-background-color: rgba(68, 184, 76, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+            } else if( i == 74 || i > 83 && i < 86 || i > 94 && i < 98 || i > 106 && i < 111) {
+                pola.get(i).setStyle("-fx-background-color: rgba(255, 50, 183, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+            } else if(i > 110){
+                pola.get(i).setStyle("-fx-background-color: rgba(0, 233, 255, 0.33); -fx-background-radius: 5;");
+            }
+        }
+    }
+
+    private void kolorujPionki(){
+        for(int i = 0; i < pionki.size(); i++){
+            if(pionki.get(i).getIdd() > 9 && pionki.get(i).getIdd() < 20) {
+                pionki.get(i).setStyle("-fx-fill: #c21400; -fx-stroke: #000000");
+            }
+            else if(pionki.get(i).getIdd() > 19 && pionki.get(i).getIdd() < 30) {
+                pionki.get(i).setStyle("-fx-fill: #00e9ff; -fx-stroke: #000000");
+            }
+        }
     }
 }
