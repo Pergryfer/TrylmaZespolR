@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
@@ -36,7 +37,11 @@ public class Controller {
         stworz.setOnAction(event -> {
             lGraczy = (int) Math.round(gracze.getValue());
             lBotow = (int) Math.round(boty.getValue());
-            Klient.ustawLiczbeGraczy(lGraczy, lBotow);
+           /* try {
+                Klient.ustawLiczbeGraczy(lGraczy, lBotow);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } */
         });
     }
 
@@ -47,4 +52,5 @@ public class Controller {
     public int getlBotow() {
         return lBotow;
     }
+
 }

@@ -1,63 +1,68 @@
 package klient;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import sample.MyPane;
-import sample.PlanszaGwiazda;
 
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Klient extends Application {
+    private Socket s = null;
+    private PrintWriter out = null;
+    private BufferedReader in = null;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
-    private static int lGraczy;
-    private static int lBotow;
-    private static Socket s;
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 400, 140));
-        primaryStage.show();
-    }
 
     public Klient(){
-
+        try {
+            this.polaczDoSerwera();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public static void polaczDoSerwera() throws IOException{
-        s = new Socket(InetAddress.getLocalHost(), 9090);
-        BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        String answer = input.readLine();
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+         Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
+         primaryStage.setTitle("Hello Trylma");
+         primaryStage.setScene(new Scene(root, 400, 140));
+         primaryStage.show();
     }
 
-    public static void ustawLiczbeGraczy(int lG, int lB){
-        lGraczy = lG;
-        lBotow = lB;
+    private void polaczDoSerwera() throws IOException {
+        this.s = new Socket(InetAddress.getLocalHost(), 9091);
+        this.in = new BufferedReader (
+                new InputStreamReader(s.getInputStream()));
+        this.out = new PrintWriter (
+                new OutputStreamWriter(s.getOutputStream()), true);
+     //   wyslijWiadomosc("dolacz");
+    }
+    public  void ustawLiczbeGraczy(int lG, int lB) throws IOException {
+        wyslijWiadomosc("iloscGraczy " + lG + " " + lB);
+    }
+    public void wyslijWiadomosc(String wiadomosc) throws IOException{
+        out.println(wiadomosc);
+        String odpowiedz = in.readLine();
+        System.out.println("Klient: " + wiadomosc);
+        System.out.println("Serwer: " + odpowiedz);
     }
 
 
 
     public static void main(String[] args) throws IOException{
-        polaczDoSerwera();
+        Klient klient = new Klient();
+        klient.ustawLiczbeGraczy(5,1);
         launch(args);
-
-
-
-
         System.exit(0);
     }
 }
