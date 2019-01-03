@@ -122,7 +122,7 @@ public class PlanszaGwiazda {
             pola[16][12] = pionki.get(19).id;
     }
 
-    public static boolean czyDostepnePole(int rzad1, int kol1, int rzad2, int kol2 ){
+    public boolean czyDostepnePole(int rzad1, int kol1, int rzad2, int kol2 ){
         //czy nie wychodzi poza tablice
         if(kol1 >=  pola[1].length || kol2 >= pola[1].length || rzad1 >=  pola[0].length || rzad2 >= pola[0].length ){
             return false;
@@ -179,14 +179,16 @@ public class PlanszaGwiazda {
 
         return true;
     }
-    public static void ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
+    public boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
         if( czyDostepnePole(rzad1, kol1, rzad2, kol2)) {
-
             pola[rzad2][kol2] = pola[rzad1][kol1];
             pola[rzad1][kol1] = 0;
+            return true;
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");
+            return false;
         }
+
     }
 
     private int losujGracza(int liczbaGraczy){

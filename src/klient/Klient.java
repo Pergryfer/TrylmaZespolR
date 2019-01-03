@@ -33,6 +33,7 @@ public class Klient extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+         Klient klient = new Klient();
          Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
          primaryStage.setTitle("Hello Trylma");
          primaryStage.setScene(new Scene(root, 400, 140));
@@ -50,17 +51,26 @@ public class Klient extends Application {
     public static void ustawLiczbeGraczy(int lG, int lB) throws IOException {
         wyslijWiadomosc("iloscGraczy " + lG + " " + lB);
     }
-    public static void wyslijWiadomosc(String wiadomosc) throws IOException{
+    public static String wyslijWiadomosc(String wiadomosc) throws IOException{
         out.println(wiadomosc);
         String odpowiedz = in.readLine();
         System.out.println("Klient: " + wiadomosc);
         System.out.println("Serwer: " + odpowiedz);
+        return odpowiedz;
+    }
+    public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
+        try {
+            if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2).equals("poprawny")) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
-
     public static void main(String[] args) throws IOException{
-        Klient klient = new Klient();
         launch(args);
         System.exit(0);
     }

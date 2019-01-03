@@ -1,6 +1,7 @@
 package serwer;
 
 import klient.Controller;
+import sample.PlanszaGwiazda;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,9 @@ public class Serwer {
     private ServerSocket serverSocket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
-    private  int lGraczy, lBotow;
+    private int lGraczy;
+    private int lBotow;
+    private PlanszaGwiazda plansza = null;
 
     public Serwer( ServerSocket ss){
         this.serverSocket = ss;
@@ -34,7 +37,7 @@ public class Serwer {
         boolean serwerDziala = true;
 
         try {
-            while(true) {
+            while(serwerDziala) {
                 Socket socket = serverSocket.accept();
                 try {
                    obslugaKlienta(socket);
@@ -101,12 +104,32 @@ public class Serwer {
                 lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
                 lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
                 System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
+                //utworzenie planszy zaleznie od ilosci graczy
+                plansza = new PlanszaGwiazda();
                 return "Wiadomosc dostarczona i wykonana";
-            case "ruch":
+            case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
+                int rzad1 = Integer.parseInt(rozdzielonaWiadomosc[1]);
+                int kol1 = Integer.parseInt(rozdzielonaWiadomosc[2]);
+                int rzad2 = Integer.parseInt(rozdzielonaWiadomosc[3]);
+                int kol2 = Integer.parseInt(rozdzielonaWiadomosc[4]);
+
+                if(plansza.ruszPionek(rzad1, kol1, rzad2, kol2)){
+                    return "poprawny";
+                } else {
+                    return "niePoprawny";
+                }
+            case "dolacz":
+                break;
+
+            case "wyjdz": break;
+
+            case "NastepnaTura": break;
+                
 
             default:
                 return "blad";
         }
+        return "blad";
     }
 
     public static void main(String[] args) throws IOException{
