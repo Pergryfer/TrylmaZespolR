@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Klient extends Application {
-    private Socket s = null;
-    private PrintWriter out = null;
-    private BufferedReader in = null;
+    private static Socket s = null;
+    private static PrintWriter out = null;
+    private static BufferedReader in = null;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -40,17 +40,17 @@ public class Klient extends Application {
     }
 
     private void polaczDoSerwera() throws IOException {
-        this.s = new Socket(InetAddress.getLocalHost(), 9091);
-        this.in = new BufferedReader (
+        s = new Socket(InetAddress.getLocalHost(), 9091);
+        in = new BufferedReader (
                 new InputStreamReader(s.getInputStream()));
-        this.out = new PrintWriter (
+        out = new PrintWriter (
                 new OutputStreamWriter(s.getOutputStream()), true);
      //   wyslijWiadomosc("dolacz");
     }
-    public  void ustawLiczbeGraczy(int lG, int lB) throws IOException {
+    public static void ustawLiczbeGraczy(int lG, int lB) throws IOException {
         wyslijWiadomosc("iloscGraczy " + lG + " " + lB);
     }
-    public void wyslijWiadomosc(String wiadomosc) throws IOException{
+    public static void wyslijWiadomosc(String wiadomosc) throws IOException{
         out.println(wiadomosc);
         String odpowiedz = in.readLine();
         System.out.println("Klient: " + wiadomosc);
@@ -61,7 +61,6 @@ public class Klient extends Application {
 
     public static void main(String[] args) throws IOException{
         Klient klient = new Klient();
-        klient.ustawLiczbeGraczy(5,1);
         launch(args);
         System.exit(0);
     }

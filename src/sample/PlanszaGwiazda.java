@@ -1,5 +1,7 @@
 package sample;
 
+import sample.Pionek;
+
 import java.util.ArrayList;
 import java.util.Random;
 

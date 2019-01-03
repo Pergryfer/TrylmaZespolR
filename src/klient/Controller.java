@@ -37,11 +37,11 @@ public class Controller {
         stworz.setOnAction(event -> {
             lGraczy = (int) Math.round(gracze.getValue());
             lBotow = (int) Math.round(boty.getValue());
-           /* try {
+            try {
                 Klient.ustawLiczbeGraczy(lGraczy, lBotow);
             } catch (IOException e) {
                 e.printStackTrace();
-            } */
+            }
         });
     }
 
