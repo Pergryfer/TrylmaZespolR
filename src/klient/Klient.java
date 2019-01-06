@@ -41,7 +41,7 @@ public class Klient extends Application {
     }
 
     private void polaczDoSerwera() throws IOException {
-        s = new Socket(InetAddress.getLocalHost(), 9091);
+        s = new Socket(InetAddress.getLocalHost(), 9092);
         in = new BufferedReader (
                 new InputStreamReader(s.getInputStream()));
         out = new PrintWriter (

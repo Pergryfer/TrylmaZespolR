@@ -134,7 +134,7 @@ public class Serwer {
 
     public static void main(String[] args) throws IOException{
    //     ServerSocket serverSocket = new ServerSocket(9091);
-        Serwer serwer = new Serwer(new ServerSocket(9091));
+        Serwer serwer = new Serwer(new ServerSocket(9092));
 
     }
 }

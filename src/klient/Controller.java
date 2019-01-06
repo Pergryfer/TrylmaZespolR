@@ -1,8 +1,10 @@
 package klient;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -42,6 +44,11 @@ public class Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Okno okno = new Okno();
+            Scene scene = new Scene(okno.pane, 1000, 680);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
         });
     }
 
