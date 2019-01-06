@@ -6,7 +6,7 @@ import sample.PlanszaGwiazda;
 public class PlanszaGwiazdaTest {
     @Test
     public void testPlanszy(){
-        PlanszaGwiazda plansza1 = new PlanszaGwiazda();
+        PlanszaGwiazda plansza1 = new PlanszaGwiazda(2);
         System.out.println("Plansza Startowa");
         pokazMape(plansza1);
         System.out.println("Ruch 1");

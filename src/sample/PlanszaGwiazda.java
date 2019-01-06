@@ -74,7 +74,7 @@ public class PlanszaGwiazda {
                 }
             }
         }
-        /*
+
         for (int i =0; i < 17; i++){
             for(int j=0; j < 25; j++){
                 if(pola[i][j] == 2){
@@ -88,7 +88,7 @@ public class PlanszaGwiazda {
                 }
             }
             System.out.println();
-        } */
+        }
 
         /*
         for(int i = 0; i < 17; i++){

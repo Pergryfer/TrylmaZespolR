@@ -3,6 +3,7 @@ package klient;
 import javafx.geometry.Pos;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -186,13 +187,16 @@ public class OknoPlanszy {
         pane.getChildren().add(vBox);
 
         MenuBar menuBar = new MenuBar();
-        Menu koniec = new Menu("Zakończ ruch");
-        menuBar.getMenus().add(koniec);
+        MenuItem koniec = new MenuItem("Zakończ ruch");
+        Menu menu = new Menu("Zakończ ruch");
+        menu.getItems().add(koniec);
+        menuBar.getMenus().add(menu);
         pane.getChildren().add(menuBar);
 
 
         koniec.setOnAction(event -> {
             Klient.koniecTury();
+            System.out.println("XDDDD");
         });
 
         return pane;

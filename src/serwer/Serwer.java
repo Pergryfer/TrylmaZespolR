@@ -66,7 +66,7 @@ public class Serwer {
                         rozpocznijGre();
                     } */
 
-                    plansza = new PlanszaGwiazda();
+                    plansza = new PlanszaGwiazda(2);
                     return "wykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
