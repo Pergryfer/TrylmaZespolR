@@ -58,15 +58,17 @@ public class Serwer {
 
             switch (rozdzielonaWiadomosc[0]){
                 case "iloscGraczy":
+                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
                     lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
-                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //utworzenie planszy zaleznie od ilosci graczy
                /*     if(lGraczy == 1 && lBotow ==1){
                         rozpocznijGre();
                     } */
-
-                    plansza = new PlanszaGwiazda();
+                    if(lGraczy + lBotow > 6 && lGraczy<1){
+                        return "nieWykonano";
+                    }
+                    plansza = new PlanszaGwiazda(lGraczy+lBotow);
                     return "wykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
