@@ -5,11 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-public class OknoCzekania {
+public class OknoDolacz {
 
     private Pane pane;
 
-    public OknoCzekania(){
+    public OknoDolacz(){
         pane = stworzOkno();
     }
 
