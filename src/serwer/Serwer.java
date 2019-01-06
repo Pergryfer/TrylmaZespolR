@@ -65,11 +65,11 @@ public class Serwer {
                /*     if(lGraczy == 1 && lBotow ==1){
                         rozpocznijGre();
                     } */
-                    if(lGraczy + lBotow > 6 && lGraczy<1){
-                        return "nieWykonano";
+                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy>0){
+                        plansza = new PlanszaGwiazda(lGraczy+lBotow);
+                        return "wykonano";
                     }
-                    plansza = new PlanszaGwiazda(lGraczy+lBotow);
-                    return "wykonano";
+                    return "nieWykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
                     int rzad1 = Integer.parseInt(rozdzielonaWiadomosc[1]);
