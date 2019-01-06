@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -25,19 +26,22 @@ public class Klient extends Application {
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
 
     public Klient(){
-        try {
-            this.polaczDoSerwera();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-         Klient klient = new Klient();
-         Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
-         primaryStage.setTitle("Hello Trylma");
-         primaryStage.setScene(new Scene(root, 400, 140));
-         primaryStage.show();
+        this.polaczDoSerwera();
+        if(wyslijWiadomosc("czyPierwszy").equals("true")) {
+            Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
+            primaryStage.setTitle("Hello Trylma");
+            primaryStage.setScene(new Scene(root, 400, 140));
+            primaryStage.show();
+        } else {
+            Pane pane =new OknoDolacz().stworzOkno();
+            primaryStage.setTitle("Hello Trylma!");
+            primaryStage.setScene(new Scene(pane, 400, 140));
+            primaryStage.show();
+        }
     }
 
     private void polaczDoSerwera() throws IOException {
@@ -48,9 +52,11 @@ public class Klient extends Application {
                 new OutputStreamWriter(s.getOutputStream()), true);
      //   wyslijWiadomosc("dolacz");
     }
+
     public static void ustawLiczbeGraczy(int lG, int lB) throws IOException {
         wyslijWiadomosc("iloscGraczy " + lG + " " + lB);
     }
+
     public static String wyslijWiadomosc(String wiadomosc) throws IOException{
         out.println(wiadomosc);
         String odpowiedz = in.readLine();
@@ -58,6 +64,7 @@ public class Klient extends Application {
         System.out.println("Serwer: " + odpowiedz);
         return odpowiedz;
     }
+
     public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
         try {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2).equals("poprawny")) {
@@ -69,6 +76,22 @@ public class Klient extends Application {
         return false;
     }
 
+    public static void dolacz(){
+        try {
+            wyslijWiadomosc("dolacz");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void koniecTury(){
+        try{
+            wyslijWiadomosc("koniecTury");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
     public static void main(String[] args) throws IOException{
         launch(args);

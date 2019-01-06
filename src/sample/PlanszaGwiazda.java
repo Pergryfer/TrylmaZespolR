@@ -1,14 +1,13 @@
 package sample;
 
-import sample.Pionek;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class PlanszaGwiazda {
     public static int[][] pola = new int[17][25];
-    public ArrayList<Pionek> pionki = new ArrayList<Pionek>();
+    public ArrayList<Pionek> pionki = new ArrayList<>();
     int liczbaGraczy;
+    boolean pierwszyRuch = true;
 
     public PlanszaGwiazda(){
         stworzPionki();
@@ -122,7 +121,7 @@ public class PlanszaGwiazda {
             pola[16][12] = pionki.get(19).id;
     }
 
-    public boolean czyDostepnePole(int rzad1, int kol1, int rzad2, int kol2 ){
+    public boolean czyDostepnePole(int rzad1, int kol1, int rzad2, int kol2){
         //czy nie wychodzi poza tablice
         if(kol1 >=  pola[1].length || kol2 >= pola[1].length || rzad1 >=  pola[0].length || rzad2 >= pola[0].length ){
             return false;
@@ -173,7 +172,10 @@ public class PlanszaGwiazda {
             }
         }
         //czy  nie wybrano odpowiednie pole do ruchu
-        if(!((kol2 == kol1 + 1) && (rzad2 == rzad1 + 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 + 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 + 1)) && !((rzad1 == rzad2) && (kol2 == kol1 - 2))  && !((rzad1 == rzad2) && (kol2 == kol1 + 2))){
+        if(!((kol2 == kol1 + 1) && (rzad2 == rzad1 + 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 + 1)
+                && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 + 1)) && !((rzad1 == rzad2)
+                && (kol2 == kol1 - 2))  && !((rzad1 == rzad2) && (kol2 == kol1 + 2)) && !pierwszyRuch){
+
             return false;
         }
 
@@ -189,6 +191,10 @@ public class PlanszaGwiazda {
             return false;
         }
 
+    }
+
+    public void nowaTura(){
+        pierwszyRuch = true;
     }
 
     private int losujGracza(int liczbaGraczy){

@@ -13,7 +13,7 @@ import sample.PlanszaGwiazda;
 
 import java.util.ArrayList;
 
-public class Okno {
+public class OknoPlanszy {
 
     static ArrayList<MyPane> pola = new ArrayList<MyPane>();
     static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -22,8 +22,8 @@ public class Okno {
     public Pane pane;
 
 
-    public Okno(){
-         pane = stworzOkno();
+    public OknoPlanszy(){
+        pane = stworzOkno();
     }
 
 
@@ -166,7 +166,7 @@ public class Okno {
 
         for (int i = 0; i < 17; i++) {
             for (int j = 0; j < 25; j++) {
-                if (planszaGwiazda.pola[i][j] == indeks) {
+                if (PlanszaGwiazda.pola[i][j] == indeks) {
                     pionki.add(new Pionek(indeks, 19));
                     Pionek p = szukajPionka(indeks);
                     int tmp = szukajPola(i, j);
@@ -190,6 +190,10 @@ public class Okno {
         menuBar.getMenus().add(koniec);
         pane.getChildren().add(menuBar);
 
+
+        koniec.setOnAction(event -> {
+            Klient.koniecTury();
+        });
 
         return pane;
 

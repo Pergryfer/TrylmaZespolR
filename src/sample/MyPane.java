@@ -2,12 +2,8 @@ package sample;
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import klient.Klient;
-import klient.Okno;
-
-import static javafx.scene.paint.Color.YELLOWGREEN;
-import static klient.Klient.ruszPionek;
+import klient.OknoPlanszy;
 
 public class MyPane extends Pane {
     private String miejsce;
@@ -513,7 +509,7 @@ public class MyPane extends Pane {
             //System.out.println(this.getChildren().get(0).getId() + "\n" + this.getChildren().get(1).getId() + "\n" + this.getMiejsce());
             int klikniety = Pionek.kliknietyPionek;
             if(klikniety > 9 && this.getChildren().size() == 0) {
-                pion = Okno.szukajPionka(klikniety);
+                pion = OknoPlanszy.szukajPionka(klikniety);
                 MyPane pane = (MyPane) pion.getParent();
 //                if(PlanszaGwiazda.czyDostepnePole(pane.getXX(), pane.getYY(), this.x, this.y)){
                     if(Klient.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y)) {
