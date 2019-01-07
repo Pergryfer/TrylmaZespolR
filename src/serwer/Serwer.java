@@ -58,18 +58,17 @@ public class Serwer {
 
             switch (rozdzielonaWiadomosc[0]){
                 case "iloscGraczy":
-                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
                     lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
+                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //utworzenie planszy zaleznie od ilosci graczy
-               /*     if(lGraczy == 1 && lBotow ==1){
+                    /*if(lGraczy == 1 && lBotow ==1){
                         rozpocznijGre();
                     } */
-                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy>0){
-                        plansza = new PlanszaGwiazda(lGraczy+lBotow);
-                        return "wykonano";
+                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy>0) {
+                        plansza = new PlanszaGwiazda(lGraczy + lBotow);
                     }
-                    return "nieWykonano";
+                    return "wykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
                     int rzad1 = Integer.parseInt(rozdzielonaWiadomosc[1]);
@@ -180,6 +179,5 @@ public class Serwer {
    //     ServerSocket serverSocket = new ServerSocket(9091);
         Serwer serwer = new Serwer(new ServerSocket(9092));
         serwer.nasluchiwanie();
-
     }
 }

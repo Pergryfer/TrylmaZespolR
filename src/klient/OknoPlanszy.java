@@ -11,6 +11,7 @@ import sample.MyPane;
 import sample.MyVBox;
 import sample.Pionek;
 import sample.PlanszaGwiazda;
+import serwer.Serwer;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,13 @@ public class OknoPlanszy {
     static ArrayList<MyPane> pola = new ArrayList<MyPane>();
     static ArrayList<HBox> lista = new ArrayList<HBox>();
     static ArrayList<Pionek> pionki = new ArrayList<Pionek>();
-    static PlanszaGwiazda planszaGwiazda;
+    static PlanszaKlient planszaKlient;
     public Pane pane;
 
 
     public OknoPlanszy(){
+        planszaKlient = Controller.getPlanszaKlient();
+        pionki = planszaKlient.pionki;
         pane = stworzOkno();
     }
 
@@ -164,11 +167,11 @@ public class OknoPlanszy {
 
         int indeks = 10;
 
-
         for (int i = 0; i < 17; i++) {
             for (int j = 0; j < 25; j++) {
-                if (PlanszaGwiazda.pola[i][j] == indeks) {
-                    pionki.add(new Pionek(indeks, 19));
+                if (PlanszaKlient.pola[i][j] == indeks) {
+                    //pionki.add(new Pionek(indeks, 19));
+                    System.out.println(indeks);
                     Pionek p = szukajPionka(indeks);
                     int tmp = szukajPola(i, j);
                     pola.get(tmp).getChildren().add(p);
@@ -178,6 +181,7 @@ public class OknoPlanszy {
                 }
             }
         }
+
 
 
         kolorujPionki();
