@@ -62,11 +62,12 @@ public class Serwer {
                     lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //utworzenie planszy zaleznie od ilosci graczy
-               /*     if(lGraczy == 1 && lBotow ==1){
+                    /*if(lGraczy == 1 && lBotow ==1){
                         rozpocznijGre();
                     } */
-
-                    plansza = new PlanszaGwiazda(2);
+                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy>0) {
+                        plansza = new PlanszaGwiazda(lGraczy + lBotow);
+                    }
                     return "wykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
@@ -178,6 +179,5 @@ public class Serwer {
    //     ServerSocket serverSocket = new ServerSocket(9091);
         Serwer serwer = new Serwer(new ServerSocket(9092));
         serwer.nasluchiwanie();
-
     }
 }

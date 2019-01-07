@@ -37,7 +37,7 @@ public class Klient extends Application {
             primaryStage.setScene(new Scene(root, 400, 140));
             primaryStage.show();
         } else {
-            Pane pane =new OknoDolacz().stworzOkno();
+            Pane pane = new OknoDolacz().stworzOkno();
             primaryStage.setTitle("Hello Trylma!");
             primaryStage.setScene(new Scene(pane, 400, 140));
             primaryStage.show();
@@ -53,8 +53,12 @@ public class Klient extends Application {
      //   wyslijWiadomosc("dolacz");
     }
 
-    public static void ustawLiczbeGraczy(int lG, int lB) throws IOException {
-        wyslijWiadomosc("iloscGraczy " + lG + " " + lB);
+    public static boolean ustawLiczbeGraczy(int lG, int lB) throws IOException {
+        if(wyslijWiadomosc("iloscGraczy " + lG + " " + lB).equals("wykonano")){
+            return true;
+        }
+        return false;
+
     }
 
     public static String wyslijWiadomosc(String wiadomosc) throws IOException{
