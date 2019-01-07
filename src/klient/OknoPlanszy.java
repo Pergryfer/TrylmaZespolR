@@ -181,6 +181,34 @@ public class OknoPlanszy {
                 }
             }
         }
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 25; j++) {
+                if (PlanszaKlient.pola[i][j] == indeks) {
+                    //pionki.add(new Pionek(indeks, 19));
+                    System.out.println(indeks);
+                    Pionek p = szukajPionka(indeks);
+                    int tmp = szukajPola(i, j);
+                    pola.get(tmp).getChildren().add(p);
+                    p.setCenterX(pola.get(tmp).getCenterX());
+                    p.setCenterY(pola.get(tmp).getCenterY());
+                    indeks++;
+                }
+            }
+        }
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 25; j++) {
+                if (PlanszaKlient.pola[i][j] == indeks) {
+                    //pionki.add(new Pionek(indeks, 19));
+                    System.out.println(indeks);
+                    Pionek p = szukajPionka(indeks);
+                    int tmp = szukajPola(i, j);
+                    pola.get(tmp).getChildren().add(p);
+                    p.setCenterX(pola.get(tmp).getCenterX());
+                    p.setCenterY(pola.get(tmp).getCenterY());
+                    indeks++;
+                }
+            }
+        }
 
 
 
@@ -238,7 +266,7 @@ public class OknoPlanszy {
             } else if( i == 74 || i > 83 && i < 86 || i > 94 && i < 98 || i > 106 && i < 111) {
                 pola.get(i).setStyle("-fx-background-color: rgba(255, 50, 183, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
             } else if(i > 110){
-                pola.get(i).setStyle("-fx-background-color: rgba(0, 233, 255, 0.33); -fx-background-radius: 5;");
+                pola.get(i).setStyle("-fx-background-color: rgba(0, 233, 255, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
             }
         }
     }
@@ -247,9 +275,16 @@ public class OknoPlanszy {
         for(int i = 0; i < pionki.size(); i++){
             if(pionki.get(i).getIdd() > 9 && pionki.get(i).getIdd() < 20) {
                 pionki.get(i).setStyle("-fx-fill: #c21400; -fx-stroke: #000000");
-            }
-            else if(pionki.get(i).getIdd() > 19 && pionki.get(i).getIdd() < 30) {
+            } else if(pionki.get(i).getIdd() > 19 && pionki.get(i).getIdd() < 30) {
                 pionki.get(i).setStyle("-fx-fill: #00e9ff; -fx-stroke: #000000");
+            } else if(pionki.get(i).getIdd() > 29 && pionki.get(i).getIdd() < 40) {
+                pionki.get(i).setStyle("-fx-fill: #3d7cba; -fx-stroke: #000000");
+            } else if(pionki.get(i).getIdd() > 39 && pionki.get(i).getIdd() < 50) {
+                pionki.get(i).setStyle("-fx-fill: #ff32b7; -fx-stroke: #000000");
+            } else if(pionki.get(i).getIdd() > 49 && pionki.get(i).getIdd() < 60) {
+                pionki.get(i).setStyle("-fx-fill: #f7ff11; -fx-stroke: #000000");
+            } else if(pionki.get(i).getIdd() > 59 && pionki.get(i).getIdd() < 70) {
+                pionki.get(i).setStyle("-fx-fill: #4eb84c; -fx-stroke: #000000");
             }
         }
     }
