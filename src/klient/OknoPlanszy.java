@@ -26,7 +26,7 @@ public class OknoPlanszy {
 
     public OknoPlanszy(){
         planszaKlient = Controller.getPlanszaKlient();
-        pionki = planszaKlient.pionki;
+        pionki = PlanszaKlient.pionki;
         pane = stworzOkno();
     }
 
@@ -165,51 +165,18 @@ public class OknoPlanszy {
 
         kolorujPola();
 
-        int indeks = 10;
 
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
+        for(int i = 0; i < 17; i++){
+            for(int j = 0; j < 25; j++){
+                if(PlanszaKlient.pola[i][j] != 0 && PlanszaKlient.pola[i][j] != 2){
+                    Pionek p = szukajPionka(PlanszaKlient.pola[i][j]);
+                    int po = szukajPola(i, j);
+                    pola.get(po).getChildren().add(p);
+                    p.setCenterX(pola.get(po).getCenterX());
+                    p.setCenterY(pola.get(po).getCenterY());
                 }
             }
         }
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
-                }
-            }
-        }
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
-                }
-            }
-        }
-
 
 
         kolorujPionki();
@@ -246,7 +213,7 @@ public class OknoPlanszy {
 
     public static Pionek szukajPionka(int ind){
         for(int i = 0; i < pionki.size(); i++){
-            if(pionki.get(i).id == ind){
+            if(pionki.get(i).getIdd() == ind){
                 return pionki.get(i);
             }
         }
