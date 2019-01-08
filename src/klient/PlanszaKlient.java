@@ -209,12 +209,4 @@ public class PlanszaKlient {
 
 
     }
-
-
-    public boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
-
-            pola[rzad2][kol2] = pola[rzad1][kol1];
-            pola[rzad1][kol1] = 0;
-            return true;
-    }
 }
