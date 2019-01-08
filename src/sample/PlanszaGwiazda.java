@@ -316,7 +316,6 @@ public class PlanszaGwiazda {
         if( czyDostepnePole(rzad1, kol1, rzad2, kol2)) {
             pola[rzad2][kol2] = pola[rzad1][kol1];
             pola[rzad1][kol1] = 0;
-            pierwszyRuch = true;
             return true;
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");
@@ -327,10 +326,6 @@ public class PlanszaGwiazda {
 
     public void nowaTura(){
         pierwszyRuch = true;
-    }
-
-    public void ustawLiczbeGraczy(int lGraczy){
-        liczbaGraczy = lGraczy;
     }
 
     private int losujGracza(int liczbaGraczy){

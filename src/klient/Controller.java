@@ -41,7 +41,7 @@ public class Controller {
             lBotow = (int) Math.round(boty.getValue());
             try {
                 if(Klient.ustawLiczbeGraczy(lGraczy, lBotow)) {
-
+                    Klient.primaryStage.close();
                     planszaKlient = new PlanszaKlient(lGraczy+lBotow);
 
                     OknoPlanszy oknoPlanszy = new OknoPlanszy();

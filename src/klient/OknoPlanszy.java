@@ -1,17 +1,13 @@
 package klient;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.MyPane;
 import sample.MyVBox;
 import sample.Pionek;
-import sample.PlanszaGwiazda;
-import serwer.Serwer;
 
 import java.util.ArrayList;
 
@@ -32,6 +28,11 @@ public class OknoPlanszy {
 
 
     private Pane stworzOkno() {
+        Button przycisk = new Button("Koniec tury");
+        przycisk.setOnAction(event -> {
+            Klient.koniecTury();
+        });
+
         //wypelnianie okna polami
         Pane pane = new Pane();
         pane.setPrefSize(1000, 680);
@@ -47,7 +48,7 @@ public class OknoPlanszy {
                 lista.add(new HBox());
                 lista.get(k).setAlignment(Pos.TOP_CENTER);
                 lista.get(k).setPrefSize(1000, 40);
-                lista.get(k).getChildren().add(pola.get(0));
+                lista.get(k).getChildren().addAll(pola.get(0));
                 k++;
             } else if (i == 2) {
                 lista.add(new HBox());
@@ -59,7 +60,8 @@ public class OknoPlanszy {
                 lista.add(new HBox());
                 lista.get(k).setAlignment(Pos.TOP_CENTER);
                 lista.get(k).setPrefSize(1000, 40);
-                lista.get(k).getChildren().addAll(pola.get(3), new MyVBox(), pola.get(4), new MyVBox(), pola.get(5));
+                double px = przycisk.getWidth();
+                lista.get(k).getChildren().addAll(przycisk, new MyVBox(200), pola.get(3), new MyVBox(), pola.get(4), new MyVBox(), pola.get(5), new MyVBox(275+px));
                 k++;
             } else if (i == 9) {
                 lista.add(new HBox());
@@ -165,51 +167,18 @@ public class OknoPlanszy {
 
         kolorujPola();
 
-        int indeks = 10;
 
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
+        for(int i = 0; i < 17; i++){
+            for(int j = 0; j < 25; j++){
+                if(planszaKlient.pola[i][j] != 0 && planszaKlient.pola[i][j] != 2){
+                    Pionek p = szukajPionka(planszaKlient.pola[i][j]);
+                    int po = szukajPola(i, j);
+                    pola.get(po).getChildren().add(p);
+                    p.setCenterX(pola.get(po).getCenterX());
+                    p.setCenterY(pola.get(po).getCenterY());
                 }
             }
         }
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
-                }
-            }
-        }
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 25; j++) {
-                if (PlanszaKlient.pola[i][j] == indeks) {
-                    //pionki.add(new Pionek(indeks, 19));
-                    System.out.println(indeks);
-                    Pionek p = szukajPionka(indeks);
-                    int tmp = szukajPola(i, j);
-                    pola.get(tmp).getChildren().add(p);
-                    p.setCenterX(pola.get(tmp).getCenterX());
-                    p.setCenterY(pola.get(tmp).getCenterY());
-                    indeks++;
-                }
-            }
-        }
-
 
 
         kolorujPionki();
@@ -217,19 +186,6 @@ public class OknoPlanszy {
 
         vBox.getChildren().addAll(lista);
         pane.getChildren().add(vBox);
-
-        MenuBar menuBar = new MenuBar();
-        MenuItem koniec = new MenuItem("Zakończ ruch");
-        Menu menu = new Menu("Zakończ ruch");
-        menu.getItems().add(koniec);
-        menuBar.getMenus().add(menu);
-        pane.getChildren().add(menuBar);
-
-
-        koniec.setOnAction(event -> {
-            Klient.koniecTury();
-            System.out.println("XDDDD");
-        });
 
         return pane;
 
@@ -246,7 +202,7 @@ public class OknoPlanszy {
 
     public static Pionek szukajPionka(int ind){
         for(int i = 0; i < pionki.size(); i++){
-            if(pionki.get(i).id == ind){
+            if(pionki.get(i).getIdd() == ind){
                 return pionki.get(i);
             }
         }

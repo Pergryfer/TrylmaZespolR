@@ -21,6 +21,7 @@ public class Klient extends Application {
     private static Socket s = null;
     private static PrintWriter out = null;
     private static BufferedReader in = null;
+    public static Stage primaryStage;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -30,6 +31,7 @@ public class Klient extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         this.polaczDoSerwera();
         if(wyslijWiadomosc("czyPierwszy").equals("true")) {
             Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
