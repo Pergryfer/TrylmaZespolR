@@ -7,15 +7,17 @@ public class Pionek extends Circle{
     public int x;
     public int y;
     public static int kliknietyPionek;
+    Kolor kolor;
 
 
 
-
-    public Pionek( int id, double promien) {
+    public Pionek( int id, double promien, Kolor kolor) {
         super(promien);
         this.id = id;
+        this.kolor = kolor;
         this.setOnMouseClicked((event) -> {
             kliknietyPionek = this.id;
+            System.out.println(this.kolor);
         });
     }
 

@@ -1,5 +1,6 @@
 package klient;
 
+import sample.Kolor;
 import sample.Pionek;
 
 import java.util.ArrayList;
@@ -92,26 +93,26 @@ public class PlanszaKlient {
     private void stworzPionki() {
         if(liczbaGraczy >= 2) {
             for (int i = 10; i < 20; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.CZERWONY));
             }
             for (int i = 20; i < 30; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.BLEKITNY));
             }
         }
         if(liczbaGraczy >= 4){
             for (int i = 30; i < 40; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.NIEBIESKI));
             }
             for (int i = 40; i < 50; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.ROZOWY));
             }
         }
         if(liczbaGraczy == 6){
             for (int i = 50; i < 60; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.ZOLTY));
             }
             for (int i = 60; i < 70; i++) {
-                pionki.add(new Pionek(i, 19));
+                pionki.add(new Pionek(i, 19, Kolor.ZIELONY));
             }
         }
     }

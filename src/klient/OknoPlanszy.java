@@ -15,7 +15,7 @@ public class OknoPlanszy {
 
     static ArrayList<MyPane> pola = new ArrayList<MyPane>();
     static ArrayList<HBox> lista = new ArrayList<HBox>();
-    static ArrayList<Pionek> pionki = new ArrayList<Pionek>();
+    public static ArrayList<Pionek> pionki = new ArrayList<Pionek>();
     static PlanszaKlient planszaKlient;
     public Pane pane;
 
