@@ -17,10 +17,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Klient extends Application {
+public class Klient extends Application implements Serializable {
     private static Socket s = null;
-    private static PrintWriter out = null;
-    private static BufferedReader in = null;
+    private static ObjectInputStream in;
+    private static ObjectOutputStream out;
     public static Stage primaryStage;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
@@ -42,10 +42,8 @@ public class Klient extends Application {
 
     private void polaczDoSerwera() throws IOException {
         s = new Socket(InetAddress.getLocalHost(), 9092);
-        in = new BufferedReader (
-                new InputStreamReader(s.getInputStream()));
-        out = new PrintWriter (
-                new OutputStreamWriter(s.getOutputStream()), true);
+        out = new ObjectOutputStream(s.getOutputStream());
+        in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
      //   wyslijWiadomosc("dolacz");
     }
 
@@ -58,11 +56,23 @@ public class Klient extends Application {
     }
 
     public static String wyslijWiadomosc(String wiadomosc) throws IOException{
-        out.println(wiadomosc);
-        String odpowiedz = in.readLine();
-        System.out.println("Klient: " + wiadomosc);
-        System.out.println("Serwer: " + odpowiedz);
-        return odpowiedz;
+        try {
+            out.writeObject(wiadomosc);
+            out.flush();
+            Object odpowiedz = in.readObject();
+            if(odpowiedz instanceof String){
+                System.out.println("Klient: " + wiadomosc);
+                System.out.println("Serwer: " + odpowiedz);
+                return (String) odpowiedz;
+            } else if(odpowiedz instanceof Pane){
+                //Obługa wlaczania Pane'a
+                return "Pane dostarczony";
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return "Blad";
     }
 
     public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){

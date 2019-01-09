@@ -2,10 +2,7 @@ package serwer;
 
 import sample.PlanszaGwiazda;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -40,10 +37,10 @@ public class Serwer {
         }
     }
 
-    private  class KlientWatek extends Thread{
+    private  class KlientWatek extends Thread implements Serializable {
         private Socket socket;
-        private BufferedReader in;
-        private PrintWriter out;
+        private ObjectInputStream in;
+        private ObjectOutputStream out;
         private int indexGry;
 
         public KlientWatek(Socket socket){
@@ -116,16 +113,20 @@ public class Serwer {
 
         public void run(){
             try{
-                in = new BufferedReader(
-                        new InputStreamReader(
-                                socket.getInputStream()));
-                out = new PrintWriter(
-                        socket.getOutputStream(), true);
+                out = new ObjectOutputStream(socket.getOutputStream());
+                in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 while(true) {
-                    for (String linia; (linia = in.readLine()) != null; ) {
-                        String odpowiedz = obslugaWiadomosci(linia);
-                        out.println(odpowiedz);
+                    try {
+                       Object wiadomosc = in.readObject();
+                       if(wiadomosc instanceof String){
+                           String odpowiedz = obslugaWiadomosci((String) wiadomosc);
+                           out.writeObject(odpowiedz);
+                           out.flush();
+                       }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
+
                 }
             }catch(IOException e){
                 e.printStackTrace();
