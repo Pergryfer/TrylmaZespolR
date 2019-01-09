@@ -1,5 +1,6 @@
 package serwer;
 
+import javafx.scene.layout.Pane;
 import sample.PlanszaGwiazda;
 
 import java.io.*;
@@ -122,6 +123,8 @@ public class Serwer {
                            String odpowiedz = obslugaWiadomosci((String) wiadomosc);
                            out.writeObject(odpowiedz);
                            out.flush();
+                       } else if(wiadomosc instanceof Pane){
+
                        }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
