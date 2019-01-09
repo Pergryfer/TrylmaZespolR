@@ -16,7 +16,8 @@ public class Serwer {
     private int lGraczy;
     private int lBotow;
     private PlanszaGwiazda plansza = null;
-    private ArrayList<SerwerWatek> watki = new ArrayList<>();
+    private ArrayList<KlientWatek> klienci = new ArrayList<>();
+    private ArrayList<GraWatek>  gry = new ArrayList<>();
     private Random losowa = new Random();
     private boolean watekSpi = false;
 
@@ -32,22 +33,22 @@ public class Serwer {
         try {
             while (serwerDziala) {
                 Socket socket = serverSocket.accept();
-                SerwerWatek watek = new SerwerWatek(socket);
-                watki.add(watek);
-                watki.get(watki.lastIndexOf(watek)).start();
-                System.out.println("Klient " + watki.size() + " sie polaczyl");
+                KlientWatek klient = new KlientWatek(socket);
+                klienci.add(klient);
+                klienci.get(klienci.lastIndexOf(klient)).start();
+                System.out.println("Klient " + klienci.size() + " sie polaczyl");
             }
         } finally {
             serverSocket.close();
         }
     }
 
-    private  class SerwerWatek extends Thread{
+    private  class KlientWatek extends Thread{
         private Socket socket;
         private BufferedReader in;
         private  PrintWriter out;
 
-        public SerwerWatek(Socket socket){
+        public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
             this.socket = socket;
         }
@@ -56,7 +57,7 @@ public class Serwer {
 
             String[] rozdzielonaWiadomosc = wiadomosc.trim().split("\\s+");
 
-            switch (rozdzielonaWiadomosc[0]){
+                switch (rozdzielonaWiadomosc[0]){
                 case "iloscGraczy":
                     lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
                     lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
@@ -71,12 +72,11 @@ public class Serwer {
                     return "wykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
+                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     int rzad1 = Integer.parseInt(rozdzielonaWiadomosc[1]);
                     int kol1 = Integer.parseInt(rozdzielonaWiadomosc[2]);
                     int rzad2 = Integer.parseInt(rozdzielonaWiadomosc[3]);
                     int kol2 = Integer.parseInt(rozdzielonaWiadomosc[4]);
-                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-
                     if(plansza.ruszPionek(rzad1, kol1, rzad2, kol2)){
                         return "poprawny";
                     } else {
@@ -85,21 +85,21 @@ public class Serwer {
                 case "dolacz": // po kliknieciu wlaczenia
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //warunek trzeba gdy za duzo ludzi
-                    if(lGraczy == watki.size()){
+                    if(lGraczy == klienci.size()){
                         //rozpocznij Gre
                         rozpocznijGre();
                     }
                     return "wykonano";
                 case "czyPierwszy":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    if(watki.indexOf(this) == 0) {
+                    if(klienci.indexOf(this) == 0) {
                         return "true";
                     } else {
                         return "false";
                     }
                 case "wyjdz":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    watki.remove(this);
+                    klienci.remove(this);
                     return "wykonano";
 
                 case "koniecTury":
@@ -112,34 +112,7 @@ public class Serwer {
                     return "blad";
             }
         }
-/*
-        public void uspijWatek(){
-            watekSpi = true;
-            synchronized (watki.get(watki.indexOf(this))) {
-                try {
-                    while(watekSpi) {
-                        watki.get(watki.indexOf(this)).wait();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
 
-        public void obudzNastepnyWatek(){
-            int index = watki.indexOf(this);
-            if(index == watki.size()-1){
-                index = 0;
-            } else {
-                index++;
-            }
-
-            synchronized (watki.get(index)){
-                watki.get(index).notify();
-                System.out.println("Budzi sie watek " + index);
-            }
-        }
-*/
         public void rozpocznijGre(){
             for(int i=0; i<losowa.nextInt(6);i++){
               //  obudzNastepnyWatek(i%(lGraczy+lBotow));
@@ -165,14 +138,18 @@ public class Serwer {
                 try{
                     System.out.println("Zamykam Socket");
                     socket.close();
-                    watki.remove(this);
+                    klienci.remove(this);
                 }catch (IOException e){
                     e.printStackTrace();
                 }
             }
-            System.out.println("Koniec watku ");
-            watki.remove(this);
+            System.out.println("Koniec watku klienta ");
+            klienci.remove(this);
         }
+    }
+
+    private class GraWatek extends Thread{
+
     }
 
     public static void main(String[] args) throws IOException{
