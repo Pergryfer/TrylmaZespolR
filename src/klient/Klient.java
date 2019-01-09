@@ -69,6 +69,8 @@ public class Klient extends Application {
         try {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2).equals("poprawny")) {
                 return true;
+            }else{
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();

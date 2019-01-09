@@ -6,8 +6,11 @@ import java.util.Random;
 public class PlanszaGwiazda {
     public static int[][] pola = new int[17][25];
     public static ArrayList<Pionek> pionki = new ArrayList<>();
-    int liczbaGraczy;
-    boolean pierwszyRuch = true;
+    private int liczbaGraczy;
+    private boolean pierwszyRuch = true;
+    private boolean czyMoznaPrzeskok = true;
+    private int rzadAktualnyPionek = -1;
+    private int kolAktualnyPionek = -1;
 
     public PlanszaGwiazda(int liczbaGraczy){
         this.liczbaGraczy = liczbaGraczy;
@@ -265,57 +268,76 @@ public class PlanszaGwiazda {
         if(pola[rzad2][kol2] == -1 || pola[rzad1][kol1] <= 0 ){
             return false;
         }
+
+        //czy to ten sam pionek
+        if( rzadAktualnyPionek != -1 && kolAktualnyPionek != -1 && !(rzadAktualnyPionek == rzad1 && kolAktualnyPionek == kol1)){
+                return false;
+        }
+
         //czy jest wykonywany ruch z przeskokiem
-        if(((kol2 == kol1 + 2) && (rzad2 == rzad1 + 2))){
-            if(pola[rzad2-1][kol2-1] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
+        if(czyMoznaPrzeskok) {
+            if (((kol2 == kol1 + 2) && (rzad2 == rzad1 + 2))) {
+                if (pola[rzad2 - 1][kol2 - 1] > 2) {
+                    System.out.println("Wykonywanie przeskoku");
+                    pierwszyRuch = false;
+                    return true;
+                }
+            }
+            if (((kol2 == kol1 - 2) && (rzad2 == rzad1 - 2))) {
+                if (pola[rzad2 + 1][kol2 + 1] > 2) {
+                    System.out.println("Wykonywanie przeskoku");
+                    pierwszyRuch = false;
+                    return true;
+                }
+            }
+            if (((kol2 == kol1 + 2) && (rzad2 == rzad1 - 2))) {
+                if (pola[rzad2 + 1][kol2 - 1] > 2) {
+                    System.out.println("Wykonywanie przeskoku!");
+                    pierwszyRuch = false;
+                    return true;
+                }
+            }
+            if (((kol2 == kol1 - 2) && (rzad2 == rzad1 + 2))) {
+                if (pola[rzad2 - 1][kol2 + 1] > 2) {
+                    System.out.println("Wykonywanie przeskoku");
+                    pierwszyRuch = false;
+                    return true;
+                }
+            }
+            if (((kol2 == kol1 - 4) && (rzad2 == rzad1))) {
+                if (pola[rzad2][kol2 + 2] > 2) {
+                    System.out.println("Wykonywanie przeskoku");
+                    pierwszyRuch = false;
+                    return true;
+                }
+            }
+            if (((kol2 == kol1 + 4) && (rzad2 == rzad1))) {
+                if (pola[rzad2][kol2 - 2] > 2) {
+                    System.out.println("wykonywanie przeskoku!");
+                    pierwszyRuch = false;
+                    return true;
+                }
             }
         }
-        if(((kol2 == kol1 - 2) && (rzad2 == rzad1 - 2))){
-            if(pola[rzad2+1][kol2+1] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
-            }
-        }
-        if(((kol2 == kol1 + 2) && (rzad2 == rzad1 - 2))){
-            if(pola[rzad2+1][kol2-1] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
-            }
-        }
-        if(((kol2 == kol1 - 2) && (rzad2 == rzad1 + 2))){
-            if(pola[rzad2-1][kol2+1] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
-            }
-        }
-        if(((kol2 == kol1 - 4) && (rzad2 == rzad1))){
-            if(pola[rzad2][kol2+2] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
-            }
-        }
-        if(((kol2 == kol1 + 4) && (rzad2 == rzad1))){
-            if(pola[rzad2][kol2-2] > 2) {
-                System.out.println("wykonywanie przeskoku");
-                return true;
-            }
+        if(!pierwszyRuch){
+            return false;
         }
         //czy  nie wybrano odpowiednie pole do ruchu
         if(!((kol2 == kol1 + 1) && (rzad2 == rzad1 + 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 + 1)
                 && (rzad2 == rzad1 - 1)) && !((kol2 == kol1 - 1) && (rzad2 == rzad1 + 1)) && !((rzad1 == rzad2)
-                && (kol2 == kol1 - 2))  && !((rzad1 == rzad2) && (kol2 == kol1 + 2)) && !pierwszyRuch){
-
+                && (kol2 == kol1 - 2))  && !((rzad1 == rzad2) && (kol2 == kol1 + 2))){
             return false;
         }
-
+        pierwszyRuch = false;
+        czyMoznaPrzeskok = false;
         return true;
     }
     public boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
         if( czyDostepnePole(rzad1, kol1, rzad2, kol2)) {
             pola[rzad2][kol2] = pola[rzad1][kol1];
             pola[rzad1][kol1] = 0;
+            kolAktualnyPionek = kol2;
+            rzadAktualnyPionek = rzad2;
             return true;
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");
@@ -326,6 +348,9 @@ public class PlanszaGwiazda {
 
     public void nowaTura(){
         pierwszyRuch = true;
+        czyMoznaPrzeskok = true;
+        rzadAktualnyPionek = -1;
+        kolAktualnyPionek = -1;
     }
 
     private int losujGracza(int liczbaGraczy){
