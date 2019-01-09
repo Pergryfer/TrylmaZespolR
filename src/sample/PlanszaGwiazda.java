@@ -11,10 +11,29 @@ public class PlanszaGwiazda {
     private boolean czyMoznaPrzeskok = true;
     private int kolAktualnyPionek = -1;
     private int rzadAktualnyPionek = -1;
+    ArrayList<Gracz> gracze = new ArrayList<>();
 
 
     public PlanszaGwiazda(int liczbaGraczy){
         this.liczbaGraczy = liczbaGraczy;
+
+        if(liczbaGraczy == 2){
+            gracze.add(new Gracz(Kolor.CZERWONY));
+            gracze.add(new Gracz(Kolor.BLEKITNY));
+        } else if(liczbaGraczy == 4){
+            gracze.add(new Gracz(Kolor.CZERWONY));
+            gracze.add(new Gracz(Kolor.ROZOWY));
+            gracze.add(new Gracz(Kolor.BLEKITNY));
+            gracze.add(new Gracz(Kolor.NIEBIESKI));
+        } else if(liczbaGraczy == 6){
+            gracze.add(new Gracz(Kolor.CZERWONY));
+            gracze.add(new Gracz(Kolor.ZOLTY));
+            gracze.add(new Gracz(Kolor.ROZOWY));
+            gracze.add(new Gracz(Kolor.BLEKITNY));
+            gracze.add(new Gracz(Kolor.ZIELONY));
+            gracze.add(new Gracz(Kolor.NIEBIESKI));
+        }
+
         stworzPola();
         dodajPionki();
     }

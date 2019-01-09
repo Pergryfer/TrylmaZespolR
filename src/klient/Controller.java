@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.PlanszaGwiazda;
 
 import java.io.IOException;
@@ -61,6 +62,7 @@ public class Controller {
                     Scene scene = new Scene(oknoPlanszy.pane, 1000, 680);
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
                 } else {
                     System.out.println("Nie wchodzi");
