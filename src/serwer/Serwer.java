@@ -13,13 +13,10 @@ import java.util.Random;
 
 public class Serwer {
     private ServerSocket serverSocket = null;
-    private int lGraczy;
-    private int lBotow;
-    private PlanszaGwiazda plansza = null;
     private ArrayList<KlientWatek> klienci = new ArrayList<>();
-    private ArrayList<GraWatek>  gry = new ArrayList<>();
+    private ArrayList<Rozgrywka>  gry = new ArrayList<>();
     private Random losowa = new Random();
-    private boolean watekSpi = false;
+
 
     public Serwer( ServerSocket ss){
         this.serverSocket = ss;
@@ -46,7 +43,8 @@ public class Serwer {
     private  class KlientWatek extends Thread{
         private Socket socket;
         private BufferedReader in;
-        private  PrintWriter out;
+        private PrintWriter out;
+        private int indexGry;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
@@ -59,17 +57,18 @@ public class Serwer {
 
                 switch (rozdzielonaWiadomosc[0]){
                 case "iloscGraczy":
-                    lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
-                    lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    //utworzenie planszy zaleznie od ilosci graczy
-                    /*if(lGraczy == 1 && lBotow ==1){
-                        rozpocznijGre();
-                    } */
-                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy>0) {
-                        plansza = new PlanszaGwiazda(lGraczy + lBotow);
+
+                    int lGraczy = Integer.parseInt(rozdzielonaWiadomosc[1]);
+                    int lBotow = Integer.parseInt(rozdzielonaWiadomosc[2]);
+
+                    if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy > 0) {
+                        Rozgrywka gra = new Rozgrywka(lGraczy, lBotow);
+                        gry.add(gra);
+                        this.indexGry = gry.indexOf(gra);
+                        return "wykonano";
                     }
-                    return "wykonano";
+                    return "nieWykonano";
 
                 case "ruch": // kolejnosc rzad1 kol1 rzad2 kol2
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
@@ -77,35 +76,31 @@ public class Serwer {
                     int kol1 = Integer.parseInt(rozdzielonaWiadomosc[2]);
                     int rzad2 = Integer.parseInt(rozdzielonaWiadomosc[3]);
                     int kol2 = Integer.parseInt(rozdzielonaWiadomosc[4]);
-                    if(plansza.ruszPionek(rzad1, kol1, rzad2, kol2)){
+                    if(gry.get(indexGry).wykonajRuch(rzad1, kol1, rzad2, kol2, klienci.indexOf(this))){
                         return "poprawny";
                     } else {
                         return "niePoprawny";
                     }
-                case "dolacz": // po kliknieciu wlaczenia
+                case "dolacz": // Proba dolaczenia
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    //warunek trzeba gdy za duzo ludzi
-                    if(lGraczy == klienci.size()){
-                        //rozpocznij Gre
-                        rozpocznijGre();
+                    for(Rozgrywka gra : gry ){
+                        if(gra.czyPelnaGra()){
+                            gra.dolacz(this);
+                            return "dolaczono";
+                        }
                     }
-                    return "wykonano";
-                case "czyPierwszy":
-                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    if(klienci.indexOf(this) == 0) {
-                        return "true";
-                    } else {
-                        return "false";
-                    }
+                    return "brak Miejsc";
+
                 case "wyjdz":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
+                    gry.get(indexGry).opuscRozgrywke(this);
                     klienci.remove(this);
                     return "wykonano";
 
                 case "koniecTury":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //blokowanie innym ruchu w FX
-                    plansza.nowaTura();
+                    gry.get(indexGry).plansza.nowaTura();
                     return "wykonano";
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
@@ -148,8 +143,42 @@ public class Serwer {
         }
     }
 
-    private class GraWatek extends Thread{
+    private class Rozgrywka{
+        private ArrayList<KlientWatek> gracze = new ArrayList<>();
+        private int lGraczy;
+        private int lBotow;
+        private PlanszaGwiazda plansza = null;
 
+
+
+        public Rozgrywka(int lGraczy, int lBotow) {
+            this.lGraczy = lGraczy;
+            this.lBotow = lBotow;
+            plansza = new PlanszaGwiazda(lGraczy + lBotow);
+        }
+
+        public boolean czyPelnaGra(){
+            if(gracze.size()<lGraczy){
+                return false;
+            } else {
+                return true;
+            }
+        }
+        public boolean wykonajRuch(int rzad1, int kol1, int rzad2, int kol2, int indexGracza){
+            if(plansza.ruszPionek(rzad1, kol1, rzad2, kol2)){
+                return true;
+            } else{
+                return false;
+            }
+        }
+
+        public void opuscRozgrywke(KlientWatek klient){
+            gracze.remove(klient);
+        }
+
+        public void dolacz(KlientWatek klient){
+            gracze.add(klient);
+        }
     }
 
     public static void main(String[] args) throws IOException{
