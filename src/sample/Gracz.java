@@ -4,19 +4,23 @@ import klient.OknoPlanszy;
 
 import java.util.ArrayList;
 
-public class Gracz {
+public class Gracz extends Uczestnik{
 
 
     Kolor kolor, przeciwnik;
     int id;
-    ArrayList<Pionek> pionki = new ArrayList<Pionek>(10);
+    public ArrayList<Pionek> pionki = new ArrayList<Pionek>(10);
 
     public Gracz(Kolor kolor){
         this.kolor = kolor;
         przeciwnik = kolor.kolorPrzeciwnika();
-        for (int i = 0; i < pionki.size(); i++){
-            if(OknoPlanszy.pionki.get(i).kolor == kolor){
-                pionki.add(OknoPlanszy.pionki.get(i));
+        dodajPionki();
+    }
+
+    private void dodajPionki(){
+        for (int i = 0; i < PlanszaGwiazda.pionki.size(); i++){
+            if(PlanszaGwiazda.pionki.get(i).kolor.equals(kolor)){
+                pionki.add(PlanszaGwiazda.pionki.get(i));
             }
         }
     }

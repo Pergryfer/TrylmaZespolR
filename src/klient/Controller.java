@@ -62,7 +62,7 @@ public class Controller {
                     Scene scene = new Scene(oknoPlanszy.pane, 1000, 680);
                     Stage stage = new Stage();
                     stage.setScene(scene);
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    //stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
                 } else {
                     System.out.println("Nie wchodzi");
