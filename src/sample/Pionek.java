@@ -9,10 +9,7 @@ public class Pionek extends Circle{
     public static int kliknietyPionek;
 
 
-    public Pionek(int id) {
-        super();
-        this.id = id;
-    }
+
 
     public Pionek( int id, double promien) {
         super(promien);

@@ -33,17 +33,11 @@ public class Klient extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.polaczDoSerwera();
-        if(wyslijWiadomosc("czyPierwszy").equals("true")) {
-            Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
-            primaryStage.setTitle("Hello Trylma");
-            primaryStage.setScene(new Scene(root, 400, 140));
-            primaryStage.show();
-        } else {
-            Pane pane = new OknoDolacz().stworzOkno();
-            primaryStage.setTitle("Hello Trylma!");
-            primaryStage.setScene(new Scene(pane, 400, 140));
-            primaryStage.show();
-        }
+        Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
+        primaryStage.setTitle("Hello Trylma");
+        primaryStage.setScene(new Scene(root, 400, 135));
+        primaryStage.show();
+
     }
 
     private void polaczDoSerwera() throws IOException {

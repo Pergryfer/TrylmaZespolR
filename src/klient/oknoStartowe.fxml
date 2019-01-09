@@ -6,17 +6,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="klient.Controller">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="klient.Controller">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Liczba graczy:" />
       <Slider fx:id="gracze" majorTickUnit="1.0" max="6.0" min="1.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="1.0" />
       <Text layoutX="174.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liczba botów:" />
       <Slider fx:id="boty" layoutX="10.0" layoutY="27.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" />
-      <HBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="400.0">
+      <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="400.0">
          <children>
-            <Button fx:id="zasady" mnemonicParsing="false" text="Zasady gry" />
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-            <Button fx:id="stworz" mnemonicParsing="false" text="Stwórz grę" />
+            <Button fx:id="stworz" mnemonicParsing="false" prefWidth="90.0" text="Stwórz grę" />
+            <HBox prefHeight="25.0" prefWidth="10.0" />
+            <Button fx:id="dolacz" mnemonicParsing="false" text="Dołącz do gry" />
+            <HBox layoutX="160.0" layoutY="10.0" prefHeight="25.0" prefWidth="10.0" />
+            <Button fx:id="zasady" mnemonicParsing="false" prefWidth="90.0" text="Zasady gry" />
          </children>
       </HBox>
    </children>

@@ -2,6 +2,7 @@ package klient;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
@@ -12,6 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Controller {
+    @FXML
+    private Button dolacz;
     @FXML
     private Button zasady;
     @FXML
@@ -32,8 +35,18 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        zasady.setOnAction(event -> {
 
+        dolacz.setOnAction(event -> {
+            Klient.dolacz();
+        });
+
+        zasady.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Zasady");
+            alert.setHeaderText(null);
+            alert.setContentText("Zasady znajdziesz tutaj : https://www.wikihow.com/Play-Chinese-Checkers");
+
+            alert.showAndWait();
         });
 
         stworz.setOnAction(event -> {
@@ -56,14 +69,6 @@ public class Controller {
                 e.printStackTrace();
             }
         });
-    }
-
-    public int getlGraczy() {
-        return lGraczy;
-    }
-
-    public int getlBotow() {
-        return lBotow;
     }
 
     public static PlanszaKlient getPlanszaKlient() {

@@ -505,7 +505,7 @@ public class MyPane extends Pane {
         }
 
         this.setOnMouseClicked((event) -> {
-            Pionek pion = null;
+            Pionek pion;
             //System.out.println(this.getChildren().get(0).getId() + "\n" + this.getChildren().get(1).getId() + "\n" + this.getMiejsce());
             int klikniety = Pionek.kliknietyPionek;
             if(klikniety > 9 && this.getChildren().size() == 0) {
