@@ -1,5 +1,7 @@
 package serwer;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.layout.Pane;
 import sample.PlanszaGwiazda;
 
@@ -43,11 +45,13 @@ public class Serwer {
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private int indexGry;
+        public boolean mojaKolej = false;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
             this.socket = socket;
         }
+
 
         private String obslugaWiadomosci(String wiadomosc){
 
@@ -99,7 +103,13 @@ public class Serwer {
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //blokowanie innym ruchu w FX
                     gry.get(indexGry).plansza.nowaTura();
-                    return "wykonano";
+                    return "czekaj";
+                case "czekam":
+                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
+                    Platform.runLater(()-> {});
+                    //czekanie aż będzie pane do zwrócenia
+
+
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
                     return "blad";

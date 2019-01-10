@@ -101,7 +101,11 @@ public class Klient extends Application implements Serializable {
 
     public static void koniecTury(){
         try{
-            wyslijWiadomosc("koniecTury");
+            String odpowiedz = wyslijWiadomosc("koniecTury");
+            if(odpowiedz.equals("czekaj")){
+                //okno czekania
+                wyslijWiadomosc("czekam"); // odpowiedz to bedzie Pane
+            }
         }catch (IOException e){
             e.printStackTrace();
         }
