@@ -25,7 +25,7 @@ public class Klient extends Application implements Serializable {
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
     public static Stage primaryStage;
-    private static Pane plansza;
+    private static Scene plansza;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -68,13 +68,13 @@ public class Klient extends Application implements Serializable {
                 System.out.println("Klient: " + wiadomosc);
                 System.out.println("Serwer: " + odpowiedz);
                 return (String) odpowiedz;
-            } else if(odpowiedz instanceof Pane){
+            } else if(odpowiedz instanceof Scene){
                 //Obługa wlaczania Pane'a
 
 
 
-                plansza = (Pane)odpowiedz;
-                primaryStage.setScene(new Scene(plansza));
+                plansza = (Scene)odpowiedz;
+                primaryStage.setScene(plansza);
 
 
 

@@ -126,8 +126,10 @@ public class Serwer {
                            String odpowiedz = obslugaWiadomosci((String) wiadomosc);
                            out.writeObject(odpowiedz);
                            out.flush();
-                       } else if(wiadomosc instanceof Pane){
-                            Pane pane = (Pane)wiadomosc;
+                       } else if(wiadomosc instanceof Scene){
+
+
+                            Scene scene = (Scene)wiadomosc;
 
                        }
                     } catch (ClassNotFoundException e) {
