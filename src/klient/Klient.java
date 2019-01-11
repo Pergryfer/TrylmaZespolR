@@ -25,6 +25,7 @@ public class Klient extends Application implements Serializable {
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
     public static Stage primaryStage;
+    private static Pane plansza;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -58,7 +59,7 @@ public class Klient extends Application implements Serializable {
 
     }
 
-    public static String wyslijWiadomosc(String wiadomosc) throws IOException{
+    public static String wyslijWiadomosc(Object wiadomosc) throws IOException{
         try {
             out.writeObject(wiadomosc);
             out.flush();
@@ -69,6 +70,14 @@ public class Klient extends Application implements Serializable {
                 return (String) odpowiedz;
             } else if(odpowiedz instanceof Pane){
                 //Obługa wlaczania Pane'a
+
+
+
+                plansza = (Pane)odpowiedz;
+                primaryStage.setScene(new Scene(plansza));
+
+
+
                 return "Pane dostarczony";
             }
         } catch (ClassNotFoundException e) {

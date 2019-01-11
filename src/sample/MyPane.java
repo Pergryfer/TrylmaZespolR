@@ -9,6 +9,7 @@ public class MyPane extends Pane {
     private String miejsce;
     public int x;
     public int y;
+    Kolor kolor;
 
     public MyPane(String miejsce){
         //nie patrz na to XD, przypisuje im indexy w zaleznosci od numerku na planszy XD
@@ -549,5 +550,9 @@ public class MyPane extends Pane {
 
     public int getYY() {
         return y;
+    }
+
+    public void setKolor(Kolor kolor) {
+        this.kolor = kolor;
     }
 }

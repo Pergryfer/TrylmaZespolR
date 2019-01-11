@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import sample.Kolor;
 import sample.MyPane;
 import sample.MyVBox;
 import sample.Pionek;
@@ -213,16 +214,22 @@ public class OknoPlanszy {
         for(int i = 0; i < 121; i++){
             if(i < 10){
                 pola.get(i).setStyle("-fx-background-color: rgba(255, 0, 0, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.CZERWONY);
             } else if(i < 14 || i > 22 && i < 26 || i > 34 && i < 37 || i == 46){
                 pola.get(i).setStyle("-fx-background-color: rgba(61, 125, 186, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.NIEBIESKI);
             } else if( i > 18 && i < 23 || i > 31 && i < 35 || i > 43 && i < 46 || i == 55) {
                 pola.get(i).setStyle("-fx-background-color: rgba(247, 255, 17, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.ZOLTY);
             } else if( i == 65 || i > 74 && i < 77 || i > 85 && i < 89 || i > 97 && i < 102) {
                 pola.get(i).setStyle("-fx-background-color: rgba(68, 184, 76, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.ZIELONY);
             } else if( i == 74 || i > 83 && i < 86 || i > 94 && i < 98 || i > 106 && i < 111) {
                 pola.get(i).setStyle("-fx-background-color: rgba(255, 50, 183, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.ROZOWY);
             } else if(i > 110){
                 pola.get(i).setStyle("-fx-background-color: rgba(0, 233, 255, 0.33); -fx-background-radius: 5; -fx-stroke: #000000");
+                pola.get(i).setKolor(Kolor.BLEKITNY);
             }
         }
     }

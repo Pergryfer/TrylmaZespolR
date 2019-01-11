@@ -1,6 +1,9 @@
 package serwer;
 
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import sample.PlanszaGwiazda;
 
 import java.io.*;
@@ -124,6 +127,7 @@ public class Serwer {
                            out.writeObject(odpowiedz);
                            out.flush();
                        } else if(wiadomosc instanceof Pane){
+                            Pane pane = (Pane)wiadomosc;
 
                        }
                     } catch (ClassNotFoundException e) {
@@ -152,6 +156,7 @@ public class Serwer {
         private int lGraczy;
         private int lBotow;
         private PlanszaGwiazda plansza = null;
+        private Pane pane;
 
 
 
@@ -183,6 +188,20 @@ public class Serwer {
         public void dolacz(KlientWatek klient){
             gracze.add(klient);
         }
+    }
+
+    private Scene stworzSceneCzekania(){
+        Pane pane = new Pane();
+        pane.setPrefSize(1000,680);
+        Text text = new Text("Oczekiwanie na twoją kolej...");
+        text.setFont(Font.font(40));
+        pane.getChildren().add(text);
+        text.setLayoutX(247);
+        text.setLayoutY(349);
+
+
+        Scene scene = new Scene(pane);
+        return scene;
     }
 
     public static void main(String[] args) throws IOException{
