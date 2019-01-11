@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import sample.MyScene;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -61,6 +62,7 @@ public class Klient extends Application implements Serializable {
 
     public static String wyslijWiadomosc(Object wiadomosc) throws IOException{
         try {
+
             out.writeObject(wiadomosc);
             out.flush();
             Object odpowiedz = in.readObject();
@@ -68,12 +70,12 @@ public class Klient extends Application implements Serializable {
                 System.out.println("Klient: " + wiadomosc);
                 System.out.println("Serwer: " + odpowiedz);
                 return (String) odpowiedz;
-            } else if(odpowiedz instanceof Scene){
+            } else if(odpowiedz instanceof MyScene){
                 //Obługa wlaczania Pane'a
 
 
 
-                plansza = (Scene)odpowiedz;
+                plansza = (MyScene)odpowiedz;
                 primaryStage.setScene(plansza);
 
 

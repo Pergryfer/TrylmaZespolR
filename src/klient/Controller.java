@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.MyScene;
 
 import java.io.IOException;
 
@@ -67,10 +68,10 @@ public class Controller {
                     }
 
                     OknoPlanszy oknoPlanszy = new OknoPlanszy();
-                    Scene scene = new Scene(oknoPlanszy.pane, 1000, 680);
+                    MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
                     Stage stage = new Stage();
                     stage.setScene(scene);
-                    //Klient.wyslijWiadomosc(oknoPlanszy.pane.getScene());
+                    Klient.wyslijWiadomosc(scene);
                     //stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
 
