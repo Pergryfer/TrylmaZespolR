@@ -1,10 +1,6 @@
 package serwer;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import sample.Kolor;
 import sample.PlanszaGwiazda;
 
 import java.io.*;
@@ -34,7 +30,7 @@ public class Serwer {
                 Socket socket = serverSocket.accept();
                 KlientWatek klient = new KlientWatek(socket);
                 klienci.add(klient);
-                //klienci.get(klienci.lastIndexOf(klient)).setD;
+                klienci.get(klienci.lastIndexOf(klient)).start();
                 System.out.println("Klient " + klienci.size() + " sie polaczyl");
             }
         } finally {
@@ -47,20 +43,17 @@ public class Serwer {
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private int indexGry;
-        private Kolor kolor;
-        private volatile boolean mojaKolej = false;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
             this.socket = socket;
         }
 
-
         private String obslugaWiadomosci(String wiadomosc){
 
             String[] rozdzielonaWiadomosc = wiadomosc.trim().split("\\s+");
 
-                switch (rozdzielonaWiadomosc[0]){
+            switch (rozdzielonaWiadomosc[0]){
                 case "iloscGraczy":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
 
@@ -105,17 +98,8 @@ public class Serwer {
                 case "koniecTury":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //blokowanie innym ruchu w FX
-                    gry.get(indexGry).koniecTury(kolor);
-                    return "czekaj";
-                case "czekam":
-                    System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-
-                    //czekanie aż będzie pane do zwrócenia
-                    while (!mojaKolej) {
-                        Thread.onSpinWait();
-                    }
-                    return "wyslijScene";
-
+                    gry.get(indexGry).plansza.nowaTura();
+                    return "wykonano";
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
                     return "blad";
@@ -124,7 +108,7 @@ public class Serwer {
 
         public void rozpocznijGre(){
             for(int i=0; i<losowa.nextInt(6);i++){
-              //  obudzNastepnyWatek(i%(lGraczy+lBotow));
+                //  obudzNastepnyWatek(i%(lGraczy+lBotow));
             }
         }
 
@@ -134,19 +118,14 @@ public class Serwer {
                 in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 while(true) {
                     try {
-                       Object wiadomosc = in.readObject();
-                       if(wiadomosc instanceof String){
-                           String odpowiedz = obslugaWiadomosci((String) wiadomosc);
-                           if(odpowiedz.equals("wyslijScene")){
-                               out.writeObject(gry.get(indexGry).scene);
-                               out.flush();
-                           }
-                           out.writeObject(odpowiedz);
-                           out.flush();
-                       } else if(wiadomosc instanceof Scene){
-                           gry.get(indexGry).scene = (Scene) wiadomosc;
+                        Object wiadomosc = in.readObject();
+                        if(wiadomosc instanceof String){
+                            String odpowiedz = obslugaWiadomosci((String) wiadomosc);
+                            out.writeObject(odpowiedz);
+                            out.flush();
+                        } else if(wiadomosc instanceof Pane){
 
-                       }
+                        }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -168,28 +147,18 @@ public class Serwer {
         }
     }
 
-    private class Rozgrywka     {
+    private class Rozgrywka{
         private ArrayList<KlientWatek> gracze = new ArrayList<>();
         private int lGraczy;
         private int lBotow;
-        private PlanszaGwiazda plansza;
-        private Scene scene;
+        private PlanszaGwiazda plansza = null;
+
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
             this.lGraczy = lGraczy;
             this.lBotow = lBotow;
             plansza = new PlanszaGwiazda(lGraczy + lBotow);
-        }
-
-        public void koniecTury(Kolor kolor){
-            for(int i = 0; i < gracze.size()-1; i++){
-                if(gracze.get(i).kolor == kolor){
-                    gracze.get(i).mojaKolej = false;
-                    gracze.get(i+1).mojaKolej = true;
-                    plansza.nowaTura();
-                }
-            }
         }
 
         public boolean czyPelnaGra(){
@@ -217,7 +186,7 @@ public class Serwer {
     }
 
     public static void main(String[] args) throws IOException{
-   //     ServerSocket serverSocket = new ServerSocket(9091);
+        //     ServerSocket serverSocket = new ServerSocket(9091);
         Serwer serwer = new Serwer(new ServerSocket(9092));
         serwer.nasluchiwanie();
     }

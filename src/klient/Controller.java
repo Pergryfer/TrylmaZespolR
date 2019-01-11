@@ -60,13 +60,6 @@ public class Controller {
                     planszaKlient = new PlanszaKlient(lGraczy+lBotow);
 
 
-
-                    if(lGraczy == 1){
-
-                    } else {
-
-                    }
-
                     OknoPlanszy oknoPlanszy = new OknoPlanszy();
                     MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
                     Stage stage = new Stage();
