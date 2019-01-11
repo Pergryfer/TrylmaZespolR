@@ -2,7 +2,9 @@ package serwer;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import sample.Kolor;
 import sample.PlanszaGwiazda;
 
 import java.io.*;
@@ -32,7 +34,7 @@ public class Serwer {
                 Socket socket = serverSocket.accept();
                 KlientWatek klient = new KlientWatek(socket);
                 klienci.add(klient);
-                klienci.get(klienci.lastIndexOf(klient)).start();
+                //klienci.get(klienci.lastIndexOf(klient)).setD;
                 System.out.println("Klient " + klienci.size() + " sie polaczyl");
             }
         } finally {
@@ -45,7 +47,8 @@ public class Serwer {
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private int indexGry;
-        public boolean mojaKolej = false;
+        private Kolor kolor;
+        private volatile boolean mojaKolej = false;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
@@ -102,13 +105,16 @@ public class Serwer {
                 case "koniecTury":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //blokowanie innym ruchu w FX
-                    gry.get(indexGry).plansza.nowaTura();
+                    gry.get(indexGry).koniecTury(kolor);
                     return "czekaj";
                 case "czekam":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    Platform.runLater(()-> {});
-                    //czekanie aż będzie pane do zwrócenia
 
+                    //czekanie aż będzie pane do zwrócenia
+                    while (!mojaKolej) {
+                        Thread.onSpinWait();
+                    }
+                    return "wyslijScene";
 
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
@@ -131,9 +137,14 @@ public class Serwer {
                        Object wiadomosc = in.readObject();
                        if(wiadomosc instanceof String){
                            String odpowiedz = obslugaWiadomosci((String) wiadomosc);
+                           if(odpowiedz.equals("wyslijScene")){
+                               out.writeObject(gry.get(indexGry).scene);
+                               out.flush();
+                           }
                            out.writeObject(odpowiedz);
                            out.flush();
-                       } else if(wiadomosc instanceof Pane){
+                       } else if(wiadomosc instanceof Scene){
+                           gry.get(indexGry).scene = (Scene) wiadomosc;
 
                        }
                     } catch (ClassNotFoundException e) {
@@ -157,18 +168,28 @@ public class Serwer {
         }
     }
 
-    private class Rozgrywka{
+    private class Rozgrywka     {
         private ArrayList<KlientWatek> gracze = new ArrayList<>();
         private int lGraczy;
         private int lBotow;
-        private PlanszaGwiazda plansza = null;
-
+        private PlanszaGwiazda plansza;
+        private Scene scene;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
             this.lGraczy = lGraczy;
             this.lBotow = lBotow;
             plansza = new PlanszaGwiazda(lGraczy + lBotow);
+        }
+
+        public void koniecTury(Kolor kolor){
+            for(int i = 0; i < gracze.size()-1; i++){
+                if(gracze.get(i).kolor == kolor){
+                    gracze.get(i).mojaKolej = false;
+                    gracze.get(i+1).mojaKolej = true;
+                    plansza.nowaTura();
+                }
+            }
         }
 
         public boolean czyPelnaGra(){
