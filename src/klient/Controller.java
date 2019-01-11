@@ -5,12 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import sample.PlanszaGwiazda;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 
 public class Controller {
@@ -58,13 +58,23 @@ public class Controller {
                     Klient.primaryStage.close();
                     planszaKlient = new PlanszaKlient(lGraczy+lBotow);
 
+
+
+                    if(lGraczy == 1){
+
+                    } else {
+
+                    }
+
                     OknoPlanszy oknoPlanszy = new OknoPlanszy();
                     Scene scene = new Scene(oknoPlanszy.pane, 1000, 680);
                     Stage stage = new Stage();
                     stage.setScene(scene);
-                    Klient.wyslijWiadomosc(oknoPlanszy.pane);
+                    //Klient.wyslijWiadomosc(oknoPlanszy.pane.getScene());
                     //stage.initStyle(StageStyle.UNDECORATED);
                     stage.show();
+
+
                 } else {
                     System.out.println("Nie wchodzi");
                 }
