@@ -12,12 +12,14 @@ public class PlanszaGwiazda {
     private int kolAktualnyPionek = -1;
     private int rzadAktualnyPionek = -1;
     ArrayList<Gracz> gracze = new ArrayList<>();
+    public int zaczyna;
 
 
     public PlanszaGwiazda(int liczbaGraczy){
         this.liczbaGraczy = liczbaGraczy;
+        zaczyna = losujGracza(liczbaGraczy);
 
-        stworzPionki();
+        //stworzPionki();
 
         if(liczbaGraczy == 2){
             gracze.add(new Gracz(Kolor.CZERWONY));
@@ -47,6 +49,7 @@ public class PlanszaGwiazda {
         }
     }
 
+    /*
     private void stworzPionki() {
         if (liczbaGraczy >= 2) {
             for (int i = 10; i < 20; i++) {
@@ -73,6 +76,7 @@ public class PlanszaGwiazda {
             }
         }
     }
+    */
 
 
     private void stworzPola(){
@@ -271,7 +275,7 @@ public class PlanszaGwiazda {
             id++;
 
         }
-
+        /*
         for (int i =0; i < 17; i++){
             for(int j=0; j < 25; j++){
                 if(pola[i][j] == 2){
@@ -286,6 +290,7 @@ public class PlanszaGwiazda {
             }
             System.out.println();
         }
+        */
 
     }
 
@@ -299,7 +304,7 @@ public class PlanszaGwiazda {
             return false;
         }
         //czy to nie pole do gry i nie posiada pionka
-        if(pola[rzad2][kol2] == -1 || pola[rzad1][kol1] <= 0 ){
+        if(pola[rzad2][kol2] != 0 || pola[rzad1][kol1] <= 9 ){
             return false;
         }
 
@@ -372,22 +377,6 @@ public class PlanszaGwiazda {
             pola[rzad1][kol1] = 0;
             kolAktualnyPionek = kol2;
             rzadAktualnyPionek = rzad2;
-
-            for (int i =0; i < 17; i++){
-                for(int j=0; j < 25; j++){
-                    if(pola[i][j] == 2){
-                        System.out.print("---");
-                    }else {
-                        if (pola[i][j] == 0) {
-                            System.out.print("[_]");
-                        }else{
-                            System.out.print("[" + pola[i][j] + "]");
-                        }
-                    }
-                }
-                System.out.println();
-            }
-
             return true;
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");
