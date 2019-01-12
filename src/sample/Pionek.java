@@ -29,4 +29,8 @@ public class Pionek extends Circle{
     public int getIdd(){
         return id;
     }
+
+    public Kolor getKolor(){
+        return kolor;
+    }
 }

@@ -54,7 +54,7 @@ public class Serwer {
             this.socket = socket;
         }
 
-        private String obslugaWiadomosci(String wiadomosc){
+        private synchronized String obslugaWiadomosci(String wiadomosc){
 
             String[] rozdzielonaWiadomosc = wiadomosc.trim().split("\\s+");
 
@@ -222,7 +222,7 @@ public class Serwer {
             klienci.remove(this);
         }
 
-        private Kolor czyKoniec(){
+        private synchronized Kolor czyKoniec(){
             int czerwone = 0, blekitne = 0, rozowe = 0, niebieskie = 0, zolte = 0, zielone = 0;
 
             for(int i = 0; i < 4; i++) {

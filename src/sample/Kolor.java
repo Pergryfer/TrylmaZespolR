@@ -3,7 +3,7 @@ package sample;
 import java.io.Serializable;
 
 public enum Kolor implements Serializable{
-    CZERWONY, ZIELONY, BLEKITNY, NIEBIESKI, ZOLTY, ROZOWY;
+    CZERWONY, ZIELONY, BLEKITNY, NIEBIESKI, ZOLTY, ROZOWY, SZARY;
 
     public Kolor kolorPrzeciwnika(){
         switch (this) {

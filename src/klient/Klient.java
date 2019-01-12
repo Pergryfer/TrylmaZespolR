@@ -89,7 +89,7 @@ public class Klient extends Application implements Serializable {
 
     }
 
-    public static String wyslijWiadomosc(Object wiadomosc) throws IOException{
+    public synchronized static String wyslijWiadomosc(Object wiadomosc) throws IOException{
         try {
             out.writeObject(wiadomosc);
             out.flush();
@@ -172,7 +172,7 @@ public class Klient extends Application implements Serializable {
         return "Blad";
     }
 
-    public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2, Kolor kolor){
+    public synchronized static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2, Kolor kolor){
         try {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2 + " " + kolor.toString()).equals("poprawny")) {
                 PlanszaKlient.pola[rzad2][kol2] = PlanszaKlient.pola[rzad1][kol1];
@@ -223,7 +223,7 @@ public class Klient extends Application implements Serializable {
         }
     }
 
-    public static void koniecTury(){
+    public synchronized static void koniecTury(){
         String odpowiedz = null;
 
         try {

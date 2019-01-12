@@ -14,6 +14,7 @@ public class MyPane extends Pane {
     public MyPane(String miejsce){
         //nie patrz na to XD, przypisuje im indexy w zaleznosci od numerku na planszy XD
         super();
+        kolor = Kolor.SZARY;
         this.miejsce = miejsce;
         this.setStyle("-fx-background-color: #eee6ee");
         this.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -513,6 +514,8 @@ public class MyPane extends Pane {
                 pion = OknoPlanszy.szukajPionka(klikniety);
                 MyPane pane = (MyPane) pion.getParent();
 //                if(PlanszaGwiazda.czyDostepnePole(pane.getXX(), pane.getYY(), this.x, this.y)){
+                    if ((!(((MyPane) pion.getParent()).getKolor() == pion.getKolor().kolorPrzeciwnika()) ||
+                        this.getKolor() == pion.getKolor().kolorPrzeciwnika()))
                     if(Klient.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y, pion.kolor)) {
                         pane.getChildren().remove(pion);
                         this.getChildren().add(pion);
@@ -554,5 +557,9 @@ public class MyPane extends Pane {
 
     public void setKolor(Kolor kolor) {
         this.kolor = kolor;
+    }
+
+    public Kolor getKolor(){
+        return this.kolor;
     }
 }
