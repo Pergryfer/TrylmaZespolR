@@ -57,18 +57,6 @@ public class Controller {
             try {
                 if(Klient.ustawLiczbeGraczy(lGraczy, lBotow)) {
                     Klient.primaryStage.close();
-                    planszaKlient = new PlanszaKlient(lGraczy+lBotow);
-
-
-                    OknoPlanszy oknoPlanszy = new OknoPlanszy();
-                    MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    Klient.wyslijWiadomosc(scene);
-                    //stage.initStyle(StageStyle.UNDECORATED);
-                    stage.show();
-
-
                 } else {
                     System.out.println("Nie wchodzi");
                 }

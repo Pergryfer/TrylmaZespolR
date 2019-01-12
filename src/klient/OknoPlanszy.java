@@ -25,7 +25,7 @@ public class OknoPlanszy {
 
 
     public OknoPlanszy(){
-        planszaKlient = Controller.getPlanszaKlient();
+        planszaKlient = Klient.getPlanszaKlient();
         pionki = planszaKlient.pionki;
         pane = stworzOkno();
     }

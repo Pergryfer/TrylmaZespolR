@@ -11,10 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import sample.MyScene;
+import sample.PlanszaGwiazda;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -27,7 +30,9 @@ public class Klient extends Application implements Serializable {
     private static ObjectInputStream in;
     private static ObjectOutputStream out;
     public static Stage primaryStage;
-    private static Scene plansza;
+    public static PlanszaKlient planszaKlient;
+    static Scene scenaCzekania;
+    static Stage stage;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -55,15 +60,25 @@ public class Klient extends Application implements Serializable {
 
     public static boolean ustawLiczbeGraczy(int lG, int lB) throws IOException {
         if(wyslijWiadomosc("iloscGraczy " + lG + " " + lB).equals("wykonano")){
+            planszaKlient = new PlanszaKlient(lG+lB);
+
+
+            OknoPlanszy oknoPlanszy = new OknoPlanszy();
+            MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
+            stage = new Stage();
+            stage.setScene(scene);
+            //Klient.wyslijWiadomosc(scene);
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
             return true;
+
         }
         return false;
 
     }
 
-    public static String wyslijWiadomosc(Object wiadomosc) throws IOException{
+    public static String wyslijWiadomosc(String wiadomosc) throws IOException{
         try {
-
             out.writeObject(wiadomosc);
             out.flush();
             Object odpowiedz = in.readObject();
@@ -71,16 +86,8 @@ public class Klient extends Application implements Serializable {
                 System.out.println("Klient: " + wiadomosc);
                 System.out.println("Serwer: " + odpowiedz);
                 return (String) odpowiedz;
-            } else if(odpowiedz instanceof MyScene){
+            } else if(odpowiedz instanceof Pane){
                 //Obługa wlaczania Pane'a
-
-
-
-                plansza = (MyScene)odpowiedz;
-                primaryStage.setScene(plansza);
-
-
-
                 return "Pane dostarczony";
             }
         } catch (ClassNotFoundException e) {
@@ -116,6 +123,9 @@ public class Klient extends Application implements Serializable {
             String odpowiedz = null;
             try {
                 odpowiedz = wyslijWiadomosc("koniecTury");
+
+                stage.setScene(instancjaScenyCzekania());
+
                 if(odpowiedz.equals("czekaj")) {
                     //okno czekania
                     wyslijWiadomosc("czekam"); // odpowiedz to bedzie Pane
@@ -131,5 +141,25 @@ public class Klient extends Application implements Serializable {
     public static void main(String[] args) throws IOException{
         launch(args);
         System.exit(0);
+    }
+
+    public static PlanszaKlient getPlanszaKlient(){
+        return planszaKlient;
+    }
+
+    private static Scene instancjaScenyCzekania(){
+        if(scenaCzekania == null) {
+            Pane pane = new Pane();
+            pane.setPrefSize(1000,680);
+            Text text = new Text("Oczekiwanie na twoją kolej...");
+            pane.getChildren().add(text);
+            text.setFont(Font.font(46));
+            text.setLayoutY(359);
+            text.setLayoutX(212);
+            scenaCzekania = new Scene(pane);
+            return scenaCzekania;
+        } else {
+            return scenaCzekania;
+        }
     }
 }
