@@ -1,6 +1,7 @@
 package klient;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -111,15 +112,19 @@ public class Klient extends Application implements Serializable {
     }
 
     public static void koniecTury(){
-        try{
-            String odpowiedz = wyslijWiadomosc("koniecTury");
-            if(odpowiedz.equals("czekaj")){
-                //okno czekania
-                wyslijWiadomosc("czekam"); // odpowiedz to bedzie Pane
+        new Thread(() -> Platform.runLater(() -> {
+            String odpowiedz = null;
+            try {
+                odpowiedz = wyslijWiadomosc("koniecTury");
+                if(odpowiedz.equals("czekaj")) {
+                    //okno czekania
+                    wyslijWiadomosc("czekam"); // odpowiedz to bedzie Pane
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        })).start();
 
     }
 

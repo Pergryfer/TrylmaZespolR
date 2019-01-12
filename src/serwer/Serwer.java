@@ -1,6 +1,7 @@
 package serwer;
 
 import javafx.scene.layout.Pane;
+import sample.MyScene;
 import sample.PlanszaGwiazda;
 
 import java.io.*;
@@ -43,6 +44,7 @@ public class Serwer {
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private int indexGry;
+        private volatile boolean mojaKolej = false;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
@@ -99,7 +101,10 @@ public class Serwer {
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
                     //blokowanie innym ruchu w FX
                     gry.get(indexGry).plansza.nowaTura();
-                    return "wykonano";
+                    if(!mojaKolej){
+                        return "nieTwojaTura";
+                    }
+                    return "twojaTura";
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
                     return "blad";
@@ -152,7 +157,7 @@ public class Serwer {
         private int lGraczy;
         private int lBotow;
         private PlanszaGwiazda plansza = null;
-
+        private MyScene scene;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
