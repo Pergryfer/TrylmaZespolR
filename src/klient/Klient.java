@@ -2,14 +2,10 @@ package klient;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -51,6 +47,7 @@ public class Klient extends Application implements Serializable {
 
     }
 
+
     private void polaczDoSerwera() throws IOException {
         s = new Socket(InetAddress.getLocalHost(), 9092);
         out = new ObjectOutputStream(s.getOutputStream());
@@ -67,8 +64,6 @@ public class Klient extends Application implements Serializable {
             MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
             stage = new Stage();
             stage.setScene(scene);
-            //Klient.wyslijWiadomosc(scene);
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
             return true;
 
@@ -86,9 +81,11 @@ public class Klient extends Application implements Serializable {
                 System.out.println("Klient: " + wiadomosc);
                 System.out.println("Serwer: " + odpowiedz);
                 return (String) odpowiedz;
-            } else if(odpowiedz instanceof Pane){
-                //Obługa wlaczania Pane'a
-                return "Pane dostarczony";
+            } else if(odpowiedz instanceof MyScene){
+                //Obługa wlaczania sceny
+                stage.setScene((MyScene) odpowiedz);
+                stage.show();
+                return "Scene dostarczony";
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -112,30 +109,48 @@ public class Klient extends Application implements Serializable {
 
     public static void dolacz(){
         try {
-            wyslijWiadomosc("dolacz");
+            if(wyslijWiadomosc("dolacz").equals("dolaczono")){
+                //tutaj okno czekania czy tam grania zobacz czy dobrze uruchamiam powinnno być tu coś z OknoPlansza?
+                stage = new Stage();
+                stage.setScene(instancjaScenyCzekania());
+                stage.show();
+                czekaj();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void koniecTury(){
-        new Thread(() -> Platform.runLater(() -> {
-            String odpowiedz = null;
-            try {
-                odpowiedz = wyslijWiadomosc("koniecTury");
+        String odpowiedz = null;
 
-                stage.setScene(instancjaScenyCzekania());
-
-                if(odpowiedz.equals("czekaj")) {
-                    //okno czekania
-                    wyslijWiadomosc("czekam"); // odpowiedz to bedzie Pane
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            odpowiedz = wyslijWiadomosc("koniecTury");
+            stage.setScene(instancjaScenyCzekania());
+            if(odpowiedz.equals("czekaj")) {
+                //okno czekania
+                czekaj();
             }
-        })).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void czekaj(){
+        Task<Void> czekacz = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    while(!wyslijWiadomosc("czekam").equals("Scene dostarczony")) {
+                        Thread.sleep(1000);
+                    }
+
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        new Thread(czekacz).start();
     }
 
     public static void main(String[] args) throws IOException{
@@ -146,6 +161,8 @@ public class Klient extends Application implements Serializable {
     public static PlanszaKlient getPlanszaKlient(){
         return planszaKlient;
     }
+
+
 
     private static Scene instancjaScenyCzekania(){
         if(scenaCzekania == null) {

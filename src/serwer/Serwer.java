@@ -1,6 +1,8 @@
 package serwer;
 
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import sample.Kolor;
 import sample.MyScene;
 import sample.PlanszaGwiazda;
 
@@ -44,7 +46,7 @@ public class Serwer {
         private ObjectInputStream in;
         private ObjectOutputStream out;
         private int indexGry;
-        private volatile boolean mojaKolej = false;
+        private int indexGracza;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
@@ -65,7 +67,8 @@ public class Serwer {
                     if((lGraczy + lBotow == 6  || lGraczy + lBotow == 4 || lGraczy + lBotow == 2) && lGraczy > 0) {
                         Rozgrywka gra = new Rozgrywka(lGraczy, lBotow);
                         gry.add(gra);
-                        this.indexGry = gry.indexOf(gra);
+                        indexGry = gry.indexOf(gra);
+                        indexGracza = 0;
                         return "wykonano";
                     }
                     return "nieWykonano";
@@ -83,12 +86,16 @@ public class Serwer {
                     }
                 case "dolacz": // Proba dolaczenia
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    for(Rozgrywka gra : gry ){
-                        if(gra.czyPelnaGra()){
-                            gra.dolacz(this);
+                    for(int i = 0; i < gry.size(); i++){
+                        System.out.println("Gra " + i + " ma " + gry.get(i).aktualnaLiczbaGraczy + " graczy");
+                        if(!gry.get(i).czyPelnaGra()){
+                            gry.get(i).dolacz(this);
+                            indexGry = i;
+                            indexGracza = gry.get(i).aktualnaLiczbaGraczy-1;
                             return "dolaczono";
                         }
                     }
+
                     return "brak Miejsc";
 
                 case "wyjdz":
@@ -99,12 +106,16 @@ public class Serwer {
 
                 case "koniecTury":
                     System.out.println("Komenda: " + rozdzielonaWiadomosc[0]);
-                    //blokowanie innym ruchu w FX
-                    gry.get(indexGry).plansza.nowaTura();
-                    if(!mojaKolej){
-                        return "nieTwojaTura";
+                    gry.get(indexGry).koniecTury(); //tu bedzie kolor
+                    return "czekaj";
+
+                case "czekam":
+
+                    if(gry.get(indexGry).turaGracza != indexGracza) {
+                        return "czekajDalej";
+                    }else {
+                        return "wyslijScene";
                     }
-                    return "twojaTura";
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
                     return "blad";
@@ -126,10 +137,17 @@ public class Serwer {
                         Object wiadomosc = in.readObject();
                         if(wiadomosc instanceof String){
                             String odpowiedz = obslugaWiadomosci((String) wiadomosc);
-                            out.writeObject(odpowiedz);
+                            if(odpowiedz.equals("wyslijScene")){
+                                out.writeObject(gry.get(indexGry).scene);
+                                out.flush();
+                            } else {
+                                out.writeObject(odpowiedz);
+                                out.flush();
+                            }
+                        } else if(wiadomosc instanceof MyScene){
+                            gry.get(indexGry).scene = (MyScene) wiadomosc;
+                            out.writeObject("wykonano");
                             out.flush();
-                        } else if(wiadomosc instanceof Pane){
-
                         }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -154,6 +172,8 @@ public class Serwer {
 
     private class Rozgrywka{
         private ArrayList<KlientWatek> gracze = new ArrayList<>();
+        private int aktualnaLiczbaGraczy;
+        private int turaGracza = 0;
         private int lGraczy;
         private int lBotow;
         private PlanszaGwiazda plansza = null;
@@ -163,16 +183,33 @@ public class Serwer {
         public Rozgrywka(int lGraczy, int lBotow) {
             this.lGraczy = lGraczy;
             this.lBotow = lBotow;
-            plansza = new PlanszaGwiazda(lGraczy + lBotow);
+            this.plansza = new PlanszaGwiazda(lGraczy + lBotow);
+            this.aktualnaLiczbaGraczy = 1;
         }
 
-        public boolean czyPelnaGra(){
-            if(gracze.size()<lGraczy){
+        public void koniecTury(/*Kolor kolor*/){
+            for(int i = 0; i < gracze.size(); i++){
+     /*           if(gracze.get(i).kolor == kolor){
+                    gracze.get(i).mojaKolej = false;
+                    gracze.get(i+1).mojaKolej = true;
+                    plansza.nowaTura();
+                } */
+                plansza.nowaTura();
+                if(turaGracza == gracze.size()-1){
+                    turaGracza = 0;
+                }
+                turaGracza++;
+            }
+        }
+
+        public boolean czyPelnaGra(){ //false to nie pelna
+            if(aktualnaLiczbaGraczy<lGraczy){
                 return false;
             } else {
                 return true;
             }
         }
+
         public boolean wykonajRuch(int rzad1, int kol1, int rzad2, int kol2, int indexGracza){
             if(plansza.ruszPionek(rzad1, kol1, rzad2, kol2)){
                 return true;
@@ -183,10 +220,12 @@ public class Serwer {
 
         public void opuscRozgrywke(KlientWatek klient){
             gracze.remove(klient);
+            aktualnaLiczbaGraczy--;
         }
 
         public void dolacz(KlientWatek klient){
             gracze.add(klient);
+            aktualnaLiczbaGraczy++;
         }
     }
 
