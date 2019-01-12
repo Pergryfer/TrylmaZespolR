@@ -76,19 +76,6 @@ public class PlanszaKlient {
             }
         }
 
-
-
-        /*
-        for(int i = 0; i < 17; i++){
-            String s = "";
-            for(int j = 0; j < 25; j++){
-                s+=pola[i][j];
-                if(j%24==0 && j!=0) {
-                    System.out.println(s);
-                }
-            }
-        }*/
-
     }
     private void stworzPionki() {
         if(liczbaGraczy >= 2) {
@@ -191,21 +178,6 @@ public class PlanszaKlient {
             pola[12][4] = pionki.get(58).id;
             pola[12][6] = pionki.get(59).id;
 
-        }
-
-        for (int i =0; i < 17; i++){
-            for(int j=0; j < 25; j++){
-                if(pola[i][j] == 2){
-                    System.out.print("---");
-                }else {
-                    if (pola[i][j] == 0) {
-                        System.out.print("[_]");
-                    }else{
-                        System.out.print("[" + pola[i][j] + "]");
-                    }
-                }
-            }
-            System.out.println();
         }
 
 

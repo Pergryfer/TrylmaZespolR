@@ -15,6 +15,8 @@ public enum Kolor {
                 return NIEBIESKI;
             case ZOLTY:
                 return ZIELONY;
+            case ZIELONY:
+                return ZOLTY;
             default:
                 return null;
         }
