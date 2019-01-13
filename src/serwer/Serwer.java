@@ -211,13 +211,7 @@ public class Serwer {
                 } */
                 plansza.nowaTura();
 
-                //turaGracza = turaGracza%(gracze.size());
-
-                if(turaGracza == gracze.size()-1){
-                    turaGracza = 0;
-                }
-
-                turaGracza++;
+                turaGracza = (turaGracza+1)%(gracze.size()+1);
             }
         }
 
