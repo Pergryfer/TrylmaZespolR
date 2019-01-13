@@ -47,6 +47,7 @@ public class Serwer {
         private ObjectOutputStream out;
         private int indexGry;
         private int indexGracza;
+        private Kolor kolorGracza;
 
         public KlientWatek(Socket socket){
             System.out.println("Tworze nowy watek");
@@ -69,6 +70,7 @@ public class Serwer {
                         gry.add(gra);
                         indexGry = gry.indexOf(gra);
                         indexGracza = 0;
+                        kolorGracza = Kolor.CZERWONY;
                         return "wykonano";
                     }
                     return "nieWykonano";
@@ -79,7 +81,8 @@ public class Serwer {
                     int kol1 = Integer.parseInt(rozdzielonaWiadomosc[2]);
                     int rzad2 = Integer.parseInt(rozdzielonaWiadomosc[3]);
                     int kol2 = Integer.parseInt(rozdzielonaWiadomosc[4]);
-                    if(gry.get(indexGry).wykonajRuch(rzad1, kol1, rzad2, kol2, klienci.indexOf(this))){
+                    Kolor kolor = Kolor.valueOf(rozdzielonaWiadomosc[5]);
+                    if(kolor.equals(kolorGracza) && gry.get(indexGry).wykonajRuch(rzad1, kol1, rzad2, kol2, klienci.indexOf(this))){
                         return "poprawny";
                     } else {
                         return "niePoprawny";
@@ -92,6 +95,30 @@ public class Serwer {
                             gry.get(i).dolacz(this);
                             indexGry = i;
                             indexGracza = gry.get(i).getAktualnaLiczbaGraczy()-1;
+                            int iloscGraczy = gry.get(i).getWszyscyGracze();
+                            if( iloscGraczy == 2 ){
+                                kolorGracza = Kolor.BLEKITNY;
+                            } else if(iloscGraczy == 4){
+                                if(indexGracza == 1){
+                                    kolorGracza = Kolor.ROZOWY;
+                                } else if(indexGracza == 2){
+                                    kolorGracza = Kolor.BLEKITNY;
+                                } else if(indexGracza == 3){
+                                    kolorGracza = Kolor.NIEBIESKI;
+                                }
+                            } else if(iloscGraczy == 6){
+                                if(indexGracza == 1){
+                                    kolorGracza = Kolor.ZOLTY;
+                                } else if(indexGracza == 2){
+                                    kolorGracza = Kolor.ROZOWY;
+                                } else if(indexGracza == 3){
+                                    kolorGracza = Kolor.BLEKITNY;
+                                } else if(indexGracza == 4){
+                                    kolorGracza = Kolor.ZIELONY;
+                                } else if(indexGracza == 5){
+                                    kolorGracza = Kolor.NIEBIESKI;
+                                }
+                            }
                             return "dolaczono";
                         }
                     }
@@ -255,6 +282,9 @@ public class Serwer {
 
         public synchronized ArrayList<ArrayList> getListaPionkow() {
             return listaPionkow;
+        }
+        public synchronized int getWszyscyGracze(){
+            return lBotow + lGraczy;
         }
 
         public synchronized void setListaPionkow(ArrayList<ArrayList> listaPionkow) {

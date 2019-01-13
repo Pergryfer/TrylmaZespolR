@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.Kolor;
 import sample.MyScene;
 
 import java.io.*;
@@ -151,9 +152,9 @@ public class Klient extends Application implements Serializable {
         return "Blad";
     }
 
-    public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
+    public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2, Kolor kolor){
         try {
-            if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2).equals("poprawny")) {
+            if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2 + " " + kolor.toString()).equals("poprawny")) {
                 planszaKlient.pola[rzad2][kol2] = planszaKlient.pola[rzad1][kol1];
                 planszaKlient.pola[rzad1][kol1] = 0;
                 return true;

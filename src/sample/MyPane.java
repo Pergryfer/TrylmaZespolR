@@ -513,7 +513,7 @@ public class MyPane extends Pane {
                 pion = OknoPlanszy.szukajPionka(klikniety);
                 MyPane pane = (MyPane) pion.getParent();
 //                if(PlanszaGwiazda.czyDostepnePole(pane.getXX(), pane.getYY(), this.x, this.y)){
-                    if(Klient.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y)) {
+                    if(Klient.ruszPionek(pane.getXX(), pane.getYY(), this.x, this.y, pion.kolor)) {
                         pane.getChildren().remove(pion);
                         this.getChildren().add(pion);
                         pion.setCenterX(this.getCenterX());
