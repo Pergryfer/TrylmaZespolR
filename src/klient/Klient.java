@@ -27,8 +27,9 @@ public class Klient extends Application implements Serializable {
     static Stage stage;
     static ArrayList<ArrayList> listaPionkow;
     private static OknoPlanszy oknoPlanszy;
+    static Scene scene;
 
- //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
+    //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
 
     public Klient(){
@@ -56,7 +57,7 @@ public class Klient extends Application implements Serializable {
         s = new Socket(InetAddress.getLocalHost(), 9091);
         out = new ObjectOutputStream(s.getOutputStream());
         in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
-     //   wyslijWiadomosc("dolacz");
+        //   wyslijWiadomosc("dolacz");
     }
 
     public static boolean ustawLiczbeGraczy(int lG, int lB) throws IOException {
@@ -66,10 +67,16 @@ public class Klient extends Application implements Serializable {
             primaryStage.close();
 
             oknoPlanszy = new OknoPlanszy();
-            MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
-            stage = instancjaStage();
-            stage.setScene(scene);
-            stage.show();
+            scene = new Scene(oknoPlanszy.pane, 1000, 680);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    stage = instancjaStage();
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
+
             return true;
 
         }
@@ -118,7 +125,8 @@ public class Klient extends Application implements Serializable {
                     @Override
                     public void run() {
                         stage = (Stage)instancjaScenyCzekania().getWindow();
-                        stage.setScene(new Scene(oknoPlanszy.pane, 1000, 680));
+                        scene.setRoot(oknoPlanszy.pane);
+                        stage.setScene(scene);
                         stage.show();
                     }
                 });
@@ -174,7 +182,7 @@ public class Klient extends Application implements Serializable {
 
                 planszaKlient = new PlanszaKlient(z);
                 oknoPlanszy = new OknoPlanszy();
-
+                scene = new Scene(oknoPlanszy.pane);
 
                 primaryStage.close();
                 Platform.runLater(new Runnable() {
@@ -186,6 +194,8 @@ public class Klient extends Application implements Serializable {
                     }
                 });
                 czekaj();
+
+                //czekaj();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -211,12 +221,19 @@ public class Klient extends Application implements Serializable {
             }
 
             String odp = wyslijWiadomosc(listaPionkow);
+
             System.out.println("\n\n\n"+odp+"\n\n\n");
 
 
 
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    instancjaStage().setScene(instancjaScenyCzekania());
+                }
+            });
 
-            stage.setScene(instancjaScenyCzekania());
+
             if(odpowiedz.equals("czekaj")) {
                 //okno czekania
                 czekaj();

@@ -210,9 +210,13 @@ public class Serwer {
                     plansza.nowaTura();
                 } */
                 plansza.nowaTura();
+
+                //turaGracza = turaGracza%(gracze.size());
+
                 if(turaGracza == gracze.size()-1){
                     turaGracza = 0;
                 }
+
                 turaGracza++;
             }
         }

@@ -272,7 +272,6 @@ public class OknoPlanszy {
 
         for(int i = 0; i < 17; i++){
             for(int j = 0; j < 25; j++){
-                System.out.println(i+ " "+ j);
                 if(PlanszaKlient.pola[i][j] != 0 && PlanszaKlient.pola[i][j] != 2){
                     Pionek p = szukajPionka(PlanszaKlient.pola[i][j]);
                     int po = szukajPola(i, j);
