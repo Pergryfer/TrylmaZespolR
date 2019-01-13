@@ -6,6 +6,9 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -17,6 +20,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Klient extends Application implements Serializable {
     private static Socket s = null;
@@ -144,6 +148,22 @@ public class Klient extends Application implements Serializable {
                 stage.setScene((MyScene) odpowiedz);
                 stage.show();
                 return "Scene dostarczony";
+            } else if (odpowiedz instanceof Kolor) {
+                Kolor kolor = (Kolor) odpowiedz;
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("KONIEC GRY");
+                alert.setHeaderText(null);
+                alert.setContentText("Wygrał gracz z kolorem : "+ kolor.toString());
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    System.exit(0);
+                }
+
+                return "koniec";
+
+
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -155,8 +175,8 @@ public class Klient extends Application implements Serializable {
     public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2, Kolor kolor){
         try {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2 + " " + kolor.toString()).equals("poprawny")) {
-                planszaKlient.pola[rzad2][kol2] = planszaKlient.pola[rzad1][kol1];
-                planszaKlient.pola[rzad1][kol1] = 0;
+                PlanszaKlient.pola[rzad2][kol2] = PlanszaKlient.pola[rzad1][kol1];
+                PlanszaKlient.pola[rzad1][kol1] = 0;
                 return true;
             }else{
                 return false;
@@ -213,10 +233,10 @@ public class Klient extends Application implements Serializable {
 
             listaPionkow = new ArrayList<>();
 
-            for (int i = 0; i < planszaKlient.pola.length; i++){
+            for (int i = 0; i < PlanszaKlient.pola.length; i++){
                 ArrayList<Integer> list = new ArrayList<>();
-                for (int j = 0; j < planszaKlient.pola[0].length; j++){
-                    list.add(planszaKlient.pola[i][j]);
+                for (int j = 0; j < PlanszaKlient.pola[0].length; j++){
+                    list.add(PlanszaKlient.pola[i][j]);
                 }
                 listaPionkow.add(list);
             }

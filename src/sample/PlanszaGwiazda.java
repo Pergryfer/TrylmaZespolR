@@ -275,22 +275,6 @@ public class PlanszaGwiazda {
             id++;
 
         }
-        /*
-        for (int i =0; i < 17; i++){
-            for(int j=0; j < 25; j++){
-                if(pola[i][j] == 2){
-                    System.out.print("---");
-                }else {
-                    if (pola[i][j] == 0) {
-                        System.out.print("[_]");
-                    }else{
-                        System.out.print("[" + pola[i][j] + "]");
-                    }
-                }
-            }
-            System.out.println();
-        }
-        */
 
     }
 
@@ -377,6 +361,28 @@ public class PlanszaGwiazda {
             pola[rzad1][kol1] = 0;
             kolAktualnyPionek = kol2;
             rzadAktualnyPionek = rzad2;
+            for (int i = -1; i < 17; i++) {
+                for (int j = 0; j < 25; j++) {
+                    if (i == -1) {
+                        if (j < 10) {
+                            System.out.print("  " + j + " ");
+                        } else {
+                            System.out.print(" " + j + " ");
+                        }
+                    } else {
+                        if (PlanszaGwiazda.pola[i][j] == 2) {
+                            System.out.print("    ");
+                        } else {
+                            if (PlanszaGwiazda.pola[i][j] == 0) {
+                                System.out.print("[__]");
+                            } else {
+                                System.out.print("[" + PlanszaGwiazda.pola[i][j] + "]");
+                            }
+                        }
+                    }
+                }
+                System.out.println(i);
+            }
             return true;
         }else{
             System.out.println("Nie można wykonać takiego ruchu!");

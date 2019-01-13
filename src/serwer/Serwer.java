@@ -100,23 +100,23 @@ public class Serwer {
                                 kolorGracza = Kolor.BLEKITNY;
                             } else if(iloscGraczy == 4){
                                 if(indexGracza == 1){
-                                    kolorGracza = Kolor.ROZOWY;
+                                    kolorGracza = Kolor.NIEBIESKI;
                                 } else if(indexGracza == 2){
                                     kolorGracza = Kolor.BLEKITNY;
                                 } else if(indexGracza == 3){
-                                    kolorGracza = Kolor.NIEBIESKI;
+                                    kolorGracza = Kolor.ROZOWY;
                                 }
                             } else if(iloscGraczy == 6){
                                 if(indexGracza == 1){
-                                    kolorGracza = Kolor.ZOLTY;
+                                    kolorGracza = Kolor.NIEBIESKI;
                                 } else if(indexGracza == 2){
-                                    kolorGracza = Kolor.ROZOWY;
+                                    kolorGracza = Kolor.ZIELONY;
                                 } else if(indexGracza == 3){
                                     kolorGracza = Kolor.BLEKITNY;
                                 } else if(indexGracza == 4){
-                                    kolorGracza = Kolor.ZIELONY;
+                                    kolorGracza = Kolor.ROZOWY;
                                 } else if(indexGracza == 5){
-                                    kolorGracza = Kolor.NIEBIESKI;
+                                    kolorGracza = Kolor.ZOLTY;
                                 }
                             }
                             return "dolaczono";
@@ -140,7 +140,7 @@ public class Serwer {
 
                     if(gry.get(indexGry).getTuraGracza() != indexGracza) {
                         return "czekajDalej";
-                    }else {
+                    } else {
                         return "wyslijArray";
                     }
                 case "przeslijIloscGraczy":
@@ -185,10 +185,22 @@ public class Serwer {
 
                             //tutaj ustawianie dla rozgrywki aktualnego arraya z pionkami
 
-                            gry.get(indexGry).setListaPionkow((ArrayList<ArrayList>) wiadomosc);
-                            out.writeObject("wykonano");
-                            out.flush();
+                            gry.get(indexGry).setListaPionkow((ArrayList<ArrayList<Integer>>) wiadomosc);
 
+
+
+                            Kolor kolor = czyKoniec();
+                            if (kolor != null){
+                                out.writeObject(kolor);
+                                out.flush();
+                            } else {
+                                out.writeObject("wykonano");
+                                out.flush();
+                            }
+
+                        } else if (wiadomosc instanceof Kolor) {
+                            out.writeObject(wiadomosc);
+                            out.flush();
                         }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -209,6 +221,84 @@ public class Serwer {
             System.out.println("Koniec watku klienta ");
             klienci.remove(this);
         }
+
+        private Kolor czyKoniec(){
+            int czerwone = 0, blekitne = 0, rozowe = 0, niebieskie = 0, zolte = 0, zielone = 0;
+
+            for(int i = 0; i < 4; i++) {
+                for(int j = 9; j < 16; j++){
+                    if(gry.get(indexGry).listaPionkow.get(i).get(j) > 19 && gry.get(indexGry).listaPionkow.get(i).get(j) < 30){
+                        blekitne++;
+                    }
+                }
+            }
+            if (blekitne == 10) {
+                return Kolor.BLEKITNY;
+            }
+
+            for (int i = 13; i < 17; i++){
+                for (int j = 9; j < 16; j++){
+                    if(gry.get(indexGry).listaPionkow.get(i).get(j) > 9 && gry.get(indexGry).listaPionkow.get(i).get(j) < 20){
+                        czerwone++;
+                    }
+                }
+            }
+            if (czerwone == 10) {
+                return Kolor.CZERWONY;
+            }
+
+            if(gry.get(indexGry).gracze.size() > 2) {
+                for (int i = 4; i < 8; i++) {
+                    for(int j = 0; j < 7; j++) {
+                        if (gry.get(indexGry).listaPionkow.get(i).get(j) > 39 && gry.get(indexGry).listaPionkow.get(i).get(j) < 50) {
+                            rozowe++;
+                        }
+                    }
+                }
+                if (rozowe == 10){
+                    return Kolor.ROZOWY;
+                }
+
+                for (int i = 9; i < 13; i++) {
+                    for (int j = 18; j < 25; j++) {
+                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 29 && gry.get(indexGry).listaPionkow.get(i).get(j) < 40){
+                            niebieskie++;
+                        }
+                    }
+                }
+                if (niebieskie == 10) {
+                    return Kolor.NIEBIESKI;
+                }
+            }
+
+            if (gry.get(indexGry).gracze.size() > 4) {
+                for (int i = 4; i < 8; i++) {
+                    for (int j = 18; j < 25; j++) {
+                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 59 && gry.get(indexGry).listaPionkow.get(i).get(j) < 70){
+                            zielone++;
+                        }
+                    }
+                }
+                if (zielone == 10) {
+                    return Kolor.ZIELONY;
+                }
+
+                for (int i = 9; i < 13; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 49 && gry.get(indexGry).listaPionkow.get(i).get(j) < 60){
+                            zolte++;
+                        }
+                    }
+                }
+                if (zolte == 0) {
+                    return Kolor.ZOLTY;
+                }
+            }
+
+
+
+            return null;
+        }
     }
 
     private class Rozgrywka {
@@ -219,7 +309,9 @@ public class Serwer {
         private int lBotow;
         private PlanszaGwiazda plansza = null;
         private MyScene scene;
-        private ArrayList<ArrayList> listaPionkow;
+        private ArrayList<ArrayList<Integer>> listaPionkow;
+        private boolean koniecGry = false;
+        private Kolor wygrany;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
@@ -280,15 +372,34 @@ public class Serwer {
             return turaGracza;
         }
 
-        public synchronized ArrayList<ArrayList> getListaPionkow() {
+        public synchronized ArrayList<ArrayList<Integer>> getListaPionkow() {
             return listaPionkow;
         }
         public synchronized int getWszyscyGracze(){
             return lBotow + lGraczy;
         }
 
-        public synchronized void setListaPionkow(ArrayList<ArrayList> listaPionkow) {
+        public synchronized void setListaPionkow(ArrayList<ArrayList<Integer>> listaPionkow) {
             this.listaPionkow = listaPionkow;
+
+            for (int i = 0; i < PlanszaGwiazda.pola.length; i++) {
+                for (int j = 0; j < PlanszaGwiazda.pola[0].length; j++) {
+                    PlanszaGwiazda.pola[i][j] = listaPionkow.get(i).get(j);
+                }
+            }
+        }
+
+        public synchronized void setKoniecGry(Kolor kolor) {
+            koniecGry = true;
+            this.wygrany = kolor;
+        }
+
+        public synchronized Kolor getWygrany() {
+            return wygrany;
+        }
+
+        public synchronized boolean czyKoniecGry() {
+            return koniecGry;
         }
     }
 

@@ -1,6 +1,8 @@
 package sample;
 
-public enum Kolor {
+import java.io.Serializable;
+
+public enum Kolor implements Serializable{
     CZERWONY, ZIELONY, BLEKITNY, NIEBIESKI, ZOLTY, ROZOWY;
 
     public Kolor kolorPrzeciwnika(){
