@@ -1,6 +1,7 @@
 package klient;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,8 +40,14 @@ public class Klient extends Application implements Serializable {
         this.polaczDoSerwera();
         Parent root = FXMLLoader.load(getClass().getResource("oknoStartowe.fxml"));
         primaryStage.setTitle("Hello Trylma");
-        primaryStage.setScene(new Scene(root, 400, 135));
-        primaryStage.show();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                primaryStage.setScene(new Scene(root, 400, 135));
+                primaryStage.show();
+            }
+        });
 
     }
 
@@ -75,7 +82,7 @@ public class Klient extends Application implements Serializable {
             out.writeObject(wiadomosc);
             out.flush();
             Object odpowiedz = in.readObject();
-            if (odpowiedz instanceof ArrayList){
+            if (odpowiedz instanceof ArrayList) {
 
                 //Tutaj serwer wysyla w odpowiedzi Arrayliste.
 
@@ -83,12 +90,12 @@ public class Klient extends Application implements Serializable {
 
                 oknoPlanszy.setListaPionkow(listaPionkow);
 
-                for (int i = -1; i < 17; i++){
-                    for(int j= 0; j < 25; j++){
-                        if(i == -1 ){
-                            if(j < 10) {
+                for (int i = -1; i < 17; i++) {
+                    for (int j = 0; j < 25; j++) {
+                        if (i == -1) {
+                            if (j < 10) {
                                 System.out.print("  " + j + " ");
-                            }else {
+                            } else {
                                 System.out.print(" " + j + " ");
                             }
                         } else {
@@ -106,11 +113,16 @@ public class Klient extends Application implements Serializable {
                     System.out.println(i);
                 }
 
-                /*NIE PRZECHODZI PRZEZ TO PONIZEJ, NIE WIEM CO JEST*/
 
-                stage = instancjaStage();
-                stage.setScene(new Scene(oknoPlanszy.pane, 1000,680));
-                stage.show();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        stage = (Stage)instancjaScenyCzekania().getWindow();
+                        stage.setScene(new Scene(oknoPlanszy.pane, 1000, 680));
+                        stage.show();
+                    }
+                });
+
 
                 return "Array dostarczony";
 
@@ -165,9 +177,14 @@ public class Klient extends Application implements Serializable {
 
 
                 primaryStage.close();
-                stage = instancjaStage();
-                stage.setScene(instancjaScenyCzekania());
-                stage.show();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        stage = instancjaStage();
+                        stage.setScene(instancjaScenyCzekania());
+                        stage.show();
+                    }
+                });
                 czekaj();
             }
         } catch (IOException e) {
