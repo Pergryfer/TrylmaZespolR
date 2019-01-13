@@ -96,6 +96,7 @@ public class Serwer {
                             gry.get(i).dolacz(this);
                             indexGry = i;
                             indexGracza = gry.get(i).getWszyscyGracze()-1;
+                            System.out.println(indexGracza);
                             int iloscGraczy = gry.get(i).getWszyscyGracze();
                             if( iloscGraczy == 2 ){
                                 kolorGracza = Kolor.BLEKITNY;
@@ -317,8 +318,12 @@ public class Serwer {
         private PlanszaGwiazda plansza = null;
         private MyScene scene;
         private ArrayList<ArrayList<Integer>> listaPionkow;
-        private boolean koniecGry = false;
-        private Kolor wygrany;
+        boolean czerwonyKoniec = false;
+        boolean blekitnyKoniec = false;
+        boolean rozowyKoniec = false;
+        boolean niebieskiKoniec = false;
+        boolean zoltyKoniec = false;
+        boolean zielonyKoniec = false;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
@@ -331,39 +336,56 @@ public class Serwer {
             if(lBotow != 0) {
                 if (lGraczy + lBotow == 2) {
                     boty.add(new Bot(1,Kolor.BLEKITNY));
+                    aktualnaLiczbaGraczy += 1;
                 } else if(lGraczy + lBotow == 4) {
                     switch (lBotow){
                         case 1:
                             boty.add(new Bot(1, Kolor.ROZOWY));
+                            aktualnaLiczbaGraczy += 1;
+                            break;
                         case 2:
                             boty.add(new Bot(1, Kolor.ROZOWY));
                             boty.add(new Bot(2, Kolor.BLEKITNY));
+                            aktualnaLiczbaGraczy += 2;
+                            break;
                         case 3:
                             boty.add(new Bot(1, Kolor.ROZOWY));
                             boty.add(new Bot(2, Kolor.BLEKITNY));
                             boty.add(new Bot(3, Kolor.NIEBIESKI));
+                            aktualnaLiczbaGraczy += 3;
+                            break;
                     }
                 } else { //6 osobowa gra
                     switch (lBotow){
                         case 1:
                             boty.add(new Bot(1, Kolor.ZOLTY));
+                            aktualnaLiczbaGraczy += 1;
+                            break;
                         case 2:
                             boty.add(new Bot(1,Kolor.ZOLTY));
                             boty.add(new Bot(2,Kolor.ROZOWY));
+                            aktualnaLiczbaGraczy += 2;
+                            break;
                         case 3:
                             boty.add(new Bot(1, Kolor.ZOLTY));
                             boty.add(new Bot(2, Kolor.ROZOWY));
                             boty.add(new Bot(3, Kolor.BLEKITNY));
+                            aktualnaLiczbaGraczy += 3;
+                            break;
                         case 4:
                             boty.add(new Bot(1, Kolor.ZOLTY));
                             boty.add(new Bot(2, Kolor.ROZOWY));
                             boty.add(new Bot(3, Kolor.BLEKITNY));
                             boty.add(new Bot(4, Kolor.ZIELONY));
+                            aktualnaLiczbaGraczy += 4;
+                            break;
                         case 5:
                             boty.add(new Bot(1, Kolor.ZOLTY));
                             boty.add(new Bot(2, Kolor.ROZOWY));
                             boty.add(new Bot(3, Kolor.ZIELONY));
                             boty.add(new Bot(4, Kolor.NIEBIESKI));
+                            aktualnaLiczbaGraczy += 5;
+                            break;
                     }
                 }
             }
@@ -371,7 +393,8 @@ public class Serwer {
 
         public synchronized void koniecTury(){
                 plansza.nowaTura();
-                turaGracza = (turaGracza+1)%(gracze.size()+1);
+                System.out.println("Tura gracza :" +turaGracza);
+                turaGracza = (turaGracza+1)%(aktualnaLiczbaGraczy);
                 for(Bot bot : boty)
                 if(turaGracza == bot.indexBota){
                     kolejkaBota(bot.kolor);
@@ -379,7 +402,7 @@ public class Serwer {
         }
 
         public synchronized boolean czyPelnaGra(){ //false to nie pelna
-            if(aktualnaLiczbaGraczy<lGraczy){
+            if(aktualnaLiczbaGraczy<lGraczy+lBotow){
                 return false;
             } else {
                 return true;
@@ -437,6 +460,46 @@ public class Serwer {
                     PlanszaGwiazda.pola[i][j] = listaPionkow.get(i).get(j);
                 }
             }
+        }
+
+        public void setKoniec(Kolor k){
+            if (k == Kolor.CZERWONY) {
+                czerwonyKoniec = true;
+            } else if (k == Kolor.BLEKITNY) {
+                blekitnyKoniec = true;
+            } else if (k == Kolor.ROZOWY) {
+                rozowyKoniec = true;
+            } else if (k == Kolor.NIEBIESKI) {
+                niebieskiKoniec = true;
+            } else if (k == Kolor.ZOLTY) {
+                zoltyKoniec = true;
+            } else if (k == Kolor.ZIELONY) {
+                zielonyKoniec = true;
+            }
+        }
+
+        public boolean isCzerwonyKoniec() {
+            return czerwonyKoniec;
+        }
+
+        public boolean isBlekitnyKoniec() {
+            return blekitnyKoniec;
+        }
+
+        public boolean isRozowyKoniec() {
+            return rozowyKoniec;
+        }
+
+        public boolean isNiebieskiKoniec() {
+            return niebieskiKoniec;
+        }
+
+        public boolean isZoltyKoniec() {
+            return zoltyKoniec;
+        }
+
+        public boolean isZielonyKoniec() {
+            return zielonyKoniec;
         }
     }
 
