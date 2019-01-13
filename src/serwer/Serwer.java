@@ -114,8 +114,10 @@ public class Serwer {
                     if(gry.get(indexGry).getTuraGracza() != indexGracza) {
                         return "czekajDalej";
                     }else {
-                        return "wyslijScene";
+                        return "wyslijArray";
                     }
+                case "przeslijIloscGraczy":
+                    return Integer.toString(gry.get(indexGry).lGraczy+gry.get(indexGry).lBotow);
                 default:
                     System.out.println("Brak Komendy: " + rozdzielonaWiadomosc[0]);
                     return "blad";
@@ -137,9 +139,13 @@ public class Serwer {
                         Object wiadomosc = in.readObject();
                         if(wiadomosc instanceof String){
                             String odpowiedz = obslugaWiadomosci((String) wiadomosc);
-                            if(odpowiedz.equals("wyslijScene")){
-                                out.writeObject(gry.get(indexGry).getScene());
+                            if(odpowiedz.equals("wyslijArray")){
+
+
+                                out.writeObject(gry.get(indexGry).getListaPionkow());
                                 out.flush();
+
+
                             } else {
                                 out.writeObject(odpowiedz);
                                 out.flush();
@@ -148,6 +154,14 @@ public class Serwer {
                             gry.get(indexGry).scene = (MyScene) wiadomosc;
                             out.writeObject("wykonano");
                             out.flush();
+                        } else if(wiadomosc instanceof ArrayList){
+
+                            //tutaj ustawianie dla rozgrywki aktualnego arraya z pionkami
+
+                            gry.get(indexGry).setListaPionkow((ArrayList<ArrayList>) wiadomosc);
+                            out.writeObject("wykonano");
+                            out.flush();
+
                         }
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
@@ -178,6 +192,7 @@ public class Serwer {
         private int lBotow;
         private PlanszaGwiazda plansza = null;
         private MyScene scene;
+        private ArrayList<ArrayList> listaPionkow;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
@@ -239,11 +254,19 @@ public class Serwer {
         public synchronized int getTuraGracza() {
             return turaGracza;
         }
+
+        public synchronized ArrayList<ArrayList> getListaPionkow() {
+            return listaPionkow;
+        }
+
+        public synchronized void setListaPionkow(ArrayList<ArrayList> listaPionkow) {
+            this.listaPionkow = listaPionkow;
+        }
     }
 
     public static void main(String[] args) throws IOException{
-        //     ServerSocket serverSocket = new ServerSocket(9091);
-        Serwer serwer = new Serwer(new ServerSocket(9092));
+        //ServerSocket serverSocket = new ServerSocket(9091);
+        Serwer serwer = new Serwer(new ServerSocket(9091));
         serwer.nasluchiwanie();
     }
 }

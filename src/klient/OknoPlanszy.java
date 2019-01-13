@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import sample.Kolor;
 import sample.MyPane;
 import sample.MyVBox;
@@ -17,11 +18,12 @@ import java.util.ArrayList;
 
 public class OknoPlanszy {
 
-    static ArrayList<MyPane> pola = new ArrayList<MyPane>();
+    ArrayList<MyPane> pola = new ArrayList<MyPane>();
     static ArrayList<HBox> lista = new ArrayList<HBox>();
     public static ArrayList<Pionek> pionki = new ArrayList<Pionek>();
     static PlanszaKlient planszaKlient;
     public Pane pane;
+    private ArrayList<ArrayList> listaPionkow;
 
 
     public OknoPlanszy(){
@@ -174,8 +176,8 @@ public class OknoPlanszy {
 
         for(int i = 0; i < 17; i++){
             for(int j = 0; j < 25; j++){
-                if(planszaKlient.pola[i][j] != 0 && planszaKlient.pola[i][j] != 2){
-                    Pionek p = szukajPionka(planszaKlient.pola[i][j]);
+                if(PlanszaKlient.pola[i][j] != 0 && PlanszaKlient.pola[i][j] != 2){
+                    Pionek p = szukajPionka(PlanszaKlient.pola[i][j]);
                     int po = szukajPola(i, j);
                     pola.get(po).getChildren().add(p);
                     p.setCenterX(pola.get(po).getCenterX());
@@ -195,7 +197,7 @@ public class OknoPlanszy {
 
     }
 
-    private int szukajPola(int x, int y) {
+    public int szukajPola(int x, int y) {
         for (int i = 0; i < pola.size(); i++) {
             if (pola.get(i).getXX() == x && pola.get(i).getYY() == y) {
                 return i;
@@ -251,6 +253,33 @@ public class OknoPlanszy {
                 pionki.get(i).setStyle("-fx-fill: #f7ff11; -fx-stroke: #000000");
             } else if(pionki.get(i).getIdd() > 59 && pionki.get(i).getIdd() < 70) {
                 pionki.get(i).setStyle("-fx-fill: #4eb84c; -fx-stroke: #000000");
+            }
+        }
+    }
+
+    public void setListaPionkow(ArrayList<ArrayList> listaPionkow){
+        this.listaPionkow = listaPionkow;
+
+        for (int i = 0; i < listaPionkow.size(); i++){
+            for (int j = 0; j < listaPionkow.get(i).size(); j++){
+                PlanszaKlient.pola[i][j] = (int) listaPionkow.get(i).get(j);
+            }
+        }
+
+        for (int i = 0; i < pola.size(); i++){
+            pola.get(i).getChildren().clear();
+        }
+
+        for(int i = 0; i < 17; i++){
+            for(int j = 0; j < 25; j++){
+                System.out.println(i+ " "+ j);
+                if(PlanszaKlient.pola[i][j] != 0 && PlanszaKlient.pola[i][j] != 2){
+                    Pionek p = szukajPionka(PlanszaKlient.pola[i][j]);
+                    int po = szukajPola(i, j);
+                    pola.get(po).getChildren().add(p);
+                    p.setCenterX(pola.get(po).getCenterX());
+                    p.setCenterY(pola.get(po).getCenterY());
+                }
             }
         }
     }

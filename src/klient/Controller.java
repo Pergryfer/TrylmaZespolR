@@ -38,6 +38,8 @@ public class Controller {
     @FXML
     public void initialize() {
 
+        gracze.setValue(2);
+
         dolacz.setOnAction(event -> {
             Klient.dolacz();
         });
@@ -56,7 +58,7 @@ public class Controller {
             lBotow = (int) Math.round(boty.getValue());
             try {
                 if(Klient.ustawLiczbeGraczy(lGraczy, lBotow)) {
-                    Klient.primaryStage.close();
+                    //Klient.primaryStage.close();
                 } else {
                     System.out.println("Nie wchodzi");
                 }

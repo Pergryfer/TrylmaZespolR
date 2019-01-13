@@ -1,7 +1,6 @@
 package klient;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,16 +9,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import sample.MyScene;
-import sample.PlanszaGwiazda;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Klient extends Application implements Serializable {
     private static Socket s = null;
@@ -29,6 +24,8 @@ public class Klient extends Application implements Serializable {
     public static PlanszaKlient planszaKlient;
     static Scene scenaCzekania;
     static Stage stage;
+    static ArrayList<ArrayList> listaPionkow;
+    private static OknoPlanszy oknoPlanszy;
 
  //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -49,7 +46,7 @@ public class Klient extends Application implements Serializable {
 
 
     private void polaczDoSerwera() throws IOException {
-        s = new Socket(InetAddress.getLocalHost(), 9092);
+        s = new Socket(InetAddress.getLocalHost(), 9091);
         out = new ObjectOutputStream(s.getOutputStream());
         in = new ObjectInputStream(new BufferedInputStream(s.getInputStream()));
      //   wyslijWiadomosc("dolacz");
@@ -58,11 +55,12 @@ public class Klient extends Application implements Serializable {
     public static boolean ustawLiczbeGraczy(int lG, int lB) throws IOException {
         if(wyslijWiadomosc("iloscGraczy " + lG + " " + lB).equals("wykonano")){
             planszaKlient = new PlanszaKlient(lG+lB);
+            //zamykanie okna startowego, inicjalizacja planszy
+            primaryStage.close();
 
-
-            OknoPlanszy oknoPlanszy = new OknoPlanszy();
+            oknoPlanszy = new OknoPlanszy();
             MyScene scene = new MyScene(oknoPlanszy.pane, 1000, 680);
-            stage = new Stage();
+            stage = instancjaStage();
             stage.setScene(scene);
             stage.show();
             return true;
@@ -72,12 +70,51 @@ public class Klient extends Application implements Serializable {
 
     }
 
-    public static String wyslijWiadomosc(String wiadomosc) throws IOException{
+    public static String wyslijWiadomosc(Object wiadomosc) throws IOException{
         try {
             out.writeObject(wiadomosc);
             out.flush();
             Object odpowiedz = in.readObject();
-            if(odpowiedz instanceof String){
+            if (odpowiedz instanceof ArrayList){
+
+                //Tutaj serwer wysyla w odpowiedzi Arrayliste.
+
+                listaPionkow = (ArrayList<ArrayList>) odpowiedz;
+
+                oknoPlanszy.setListaPionkow(listaPionkow);
+
+                for (int i = -1; i < 17; i++){
+                    for(int j= 0; j < 25; j++){
+                        if(i == -1 ){
+                            if(j < 10) {
+                                System.out.print("  " + j + " ");
+                            }else {
+                                System.out.print(" " + j + " ");
+                            }
+                        } else {
+                            if (PlanszaKlient.pola[i][j] == 2) {
+                                System.out.print("    ");
+                            } else {
+                                if (PlanszaKlient.pola[i][j] == 0) {
+                                    System.out.print("[__]");
+                                } else {
+                                    System.out.print("[" + PlanszaKlient.pola[i][j] + "]");
+                                }
+                            }
+                        }
+                    }
+                    System.out.println(i);
+                }
+
+                /*NIE PRZECHODZI PRZEZ TO PONIZEJ, NIE WIEM CO JEST*/
+
+                stage = instancjaStage();
+                stage.setScene(new Scene(oknoPlanszy.pane, 1000,680));
+                stage.show();
+
+                return "Array dostarczony";
+
+            } else if(odpowiedz instanceof String){
                 System.out.println("Klient: " + wiadomosc);
                 System.out.println("Serwer: " + odpowiedz);
                 return (String) odpowiedz;
@@ -97,6 +134,8 @@ public class Klient extends Application implements Serializable {
     public static boolean ruszPionek(int rzad1, int kol1, int rzad2, int kol2){
         try {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2).equals("poprawny")) {
+                planszaKlient.pola[rzad2][kol2] = planszaKlient.pola[rzad1][kol1];
+                planszaKlient.pola[rzad1][kol1] = 0;
                 return true;
             }else{
                 return false;
@@ -110,8 +149,23 @@ public class Klient extends Application implements Serializable {
     public static void dolacz(){
         try {
             if(wyslijWiadomosc("dolacz").equals("dolaczono")){
-                //tutaj okno czekania czy tam grania zobacz czy dobrze uruchamiam powinnno być tu coś z OknoPlansza?
-                stage = new Stage();
+
+                String odp = wyslijWiadomosc("przeslijIloscGraczy");
+                int z = -1;
+
+                try{
+                    z = Integer.parseInt(odp);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                assert z != -1;
+
+                planszaKlient = new PlanszaKlient(z);
+                oknoPlanszy = new OknoPlanszy();
+
+
+                primaryStage.close();
+                stage = instancjaStage();
                 stage.setScene(instancjaScenyCzekania());
                 stage.show();
                 czekaj();
@@ -126,6 +180,25 @@ public class Klient extends Application implements Serializable {
 
         try {
             odpowiedz = wyslijWiadomosc("koniecTury");
+
+            //zapisywanie stanu pionkow do listy, pozniej wyslanie do serwera i czekanie na swoja ture
+
+            listaPionkow = new ArrayList<>();
+
+            for (int i = 0; i < planszaKlient.pola.length; i++){
+                ArrayList<Integer> list = new ArrayList<>();
+                for (int j = 0; j < planszaKlient.pola[0].length; j++){
+                    list.add(planszaKlient.pola[i][j]);
+                }
+                listaPionkow.add(list);
+            }
+
+            String odp = wyslijWiadomosc(listaPionkow);
+            System.out.println("\n\n\n"+odp+"\n\n\n");
+
+
+
+
             stage.setScene(instancjaScenyCzekania());
             if(odpowiedz.equals("czekaj")) {
                 //okno czekania
@@ -141,7 +214,7 @@ public class Klient extends Application implements Serializable {
             @Override
             protected Void call() throws Exception {
                 try {
-                    while(!wyslijWiadomosc("czekam").equals("Scene dostarczony")) {
+                    while(!wyslijWiadomosc("czekam").equals("Array dostarczony")) {
                         Thread.sleep(1000);
                     }
 
@@ -179,4 +252,14 @@ public class Klient extends Application implements Serializable {
             return scenaCzekania;
         }
     }
+
+    private static Stage instancjaStage(){
+        if(stage == null){
+            stage = new Stage();
+            return stage;
+        } else {
+            return stage;
+        }
+    }
+
 }

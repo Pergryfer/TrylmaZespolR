@@ -2,7 +2,6 @@ package test;
 
 import klient.PlanszaKlient;
 import org.testng.annotations.Test;
-import sample.PlanszaGwiazda;
 
 import static org.testng.AssertJUnit.assertEquals;
 
