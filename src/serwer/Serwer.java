@@ -71,6 +71,7 @@ public class Serwer {
                         indexGry = gry.indexOf(gra);
                         indexGracza = 0;
                         kolorGracza = Kolor.CZERWONY;
+                        gra.gracze.add(this);
                         return "wykonano";
                     }
                     return "nieWykonano";
@@ -167,6 +168,11 @@ public class Serwer {
                         if(wiadomosc instanceof String){
                             String odpowiedz = obslugaWiadomosci((String) wiadomosc);
                             if(odpowiedz.equals("wyslijArray")){
+
+
+                                System.out.println("aktualna liczba graczy :" + gry.get(indexGry).getAktualnaLiczbaGraczy());
+
+                                System.out.println("size : " + gry.get(indexGry).gracze.size());
 
 
                                 out.writeObject(gry.get(indexGry).getListaPionkow());
@@ -322,7 +328,7 @@ public class Serwer {
         }
 
         public synchronized void koniecTury(/*Kolor kolor*/){
-            for(int i = 0; i < gracze.size(); i++){
+            //for(int i = 0; i < gracze.size(); i++){
      /*           if(gracze.get(i).kolor == kolor){
                     gracze.get(i).mojaKolej = false;
                     gracze.get(i+1).mojaKolej = true;
@@ -330,8 +336,13 @@ public class Serwer {
                 } */
                 plansza.nowaTura();
 
-                turaGracza = (turaGracza+1)%(gracze.size()+1);
-            }
+                System.out.println("Tura przed :" + turaGracza);
+
+
+                turaGracza = (turaGracza+1)%(aktualnaLiczbaGraczy);
+
+                System.out.println("Tura po :" + turaGracza);
+            //}
         }
 
         public synchronized boolean czyPelnaGra(){ //false to nie pelna
@@ -387,19 +398,6 @@ public class Serwer {
                     PlanszaGwiazda.pola[i][j] = listaPionkow.get(i).get(j);
                 }
             }
-        }
-
-        public synchronized void setKoniecGry(Kolor kolor) {
-            koniecGry = true;
-            this.wygrany = kolor;
-        }
-
-        public synchronized Kolor getWygrany() {
-            return wygrany;
-        }
-
-        public synchronized boolean czyKoniecGry() {
-            return koniecGry;
         }
     }
 

@@ -311,9 +311,26 @@ public class Klient extends Application implements Serializable {
     private static Stage instancjaStage(){
         if(stage == null){
             stage = new Stage();
+            stage.setOnCloseRequest(event -> {
+                /*
+                * TO-DO
+                * co zrobic przed wyjsciem z gry
+                * */
+
+                opuscGre();
+
+            });
             return stage;
         } else {
             return stage;
+        }
+    }
+
+    private synchronized static void opuscGre(){
+        try {
+            wyslijWiadomosc("wyjdz");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
