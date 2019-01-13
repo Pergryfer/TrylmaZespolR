@@ -95,7 +95,7 @@ public class Serwer {
                         if(!gry.get(i).czyPelnaGra()){
                             gry.get(i).dolacz(this);
                             indexGry = i;
-                            indexGracza = gry.get(i).getAktualnaLiczbaGraczy()-1;
+                            indexGracza = gry.get(i).getWszyscyGracze()-1;
                             int iloscGraczy = gry.get(i).getWszyscyGracze();
                             if( iloscGraczy == 2 ){
                                 kolorGracza = Kolor.BLEKITNY;
@@ -309,6 +309,7 @@ public class Serwer {
 
     private class Rozgrywka {
         private ArrayList<KlientWatek> gracze = new ArrayList<>();
+        private ArrayList<Bot> boty = new ArrayList<>();
         private int aktualnaLiczbaGraczy;
         private int turaGracza = 0;
         private int lGraczy;
@@ -325,24 +326,56 @@ public class Serwer {
             this.lBotow = lBotow;
             this.plansza = new PlanszaGwiazda(lGraczy + lBotow);
             this.aktualnaLiczbaGraczy = 1;
+
+            //tworzenie botow
+            if(lBotow != 0) {
+                if (lGraczy + lBotow == 2) {
+                    boty.add(new Bot(1,Kolor.BLEKITNY));
+                } else if(lGraczy + lBotow == 4) {
+                    switch (lBotow){
+                        case 1:
+                            boty.add(new Bot(1, Kolor.ROZOWY));
+                        case 2:
+                            boty.add(new Bot(1, Kolor.ROZOWY));
+                            boty.add(new Bot(2, Kolor.BLEKITNY));
+                        case 3:
+                            boty.add(new Bot(1, Kolor.ROZOWY));
+                            boty.add(new Bot(2, Kolor.BLEKITNY));
+                            boty.add(new Bot(3, Kolor.NIEBIESKI));
+                    }
+                } else { //6 osobowa gra
+                    switch (lBotow){
+                        case 1:
+                            boty.add(new Bot(1, Kolor.ZOLTY));
+                        case 2:
+                            boty.add(new Bot(1,Kolor.ZOLTY));
+                            boty.add(new Bot(2,Kolor.ROZOWY));
+                        case 3:
+                            boty.add(new Bot(1, Kolor.ZOLTY));
+                            boty.add(new Bot(2, Kolor.ROZOWY));
+                            boty.add(new Bot(3, Kolor.BLEKITNY));
+                        case 4:
+                            boty.add(new Bot(1, Kolor.ZOLTY));
+                            boty.add(new Bot(2, Kolor.ROZOWY));
+                            boty.add(new Bot(3, Kolor.BLEKITNY));
+                            boty.add(new Bot(4, Kolor.ZIELONY));
+                        case 5:
+                            boty.add(new Bot(1, Kolor.ZOLTY));
+                            boty.add(new Bot(2, Kolor.ROZOWY));
+                            boty.add(new Bot(3, Kolor.ZIELONY));
+                            boty.add(new Bot(4, Kolor.NIEBIESKI));
+                    }
+                }
+            }
         }
 
-        public synchronized void koniecTury(/*Kolor kolor*/){
-            //for(int i = 0; i < gracze.size(); i++){
-     /*           if(gracze.get(i).kolor == kolor){
-                    gracze.get(i).mojaKolej = false;
-                    gracze.get(i+1).mojaKolej = true;
-                    plansza.nowaTura();
-                } */
+        public synchronized void koniecTury(){
                 plansza.nowaTura();
-
-                System.out.println("Tura przed :" + turaGracza);
-
-
-                turaGracza = (turaGracza+1)%(aktualnaLiczbaGraczy);
-
-                System.out.println("Tura po :" + turaGracza);
-            //}
+                turaGracza = (turaGracza+1)%(gracze.size()+1);
+                for(Bot bot : boty)
+                if(turaGracza == bot.indexBota){
+                    kolejkaBota(bot.kolor);
+                }
         }
 
         public synchronized boolean czyPelnaGra(){ //false to nie pelna
@@ -369,6 +402,12 @@ public class Serwer {
         public synchronized void dolacz(KlientWatek klient){
             gracze.add(klient);
             aktualnaLiczbaGraczy++;
+        }
+
+        //bot
+
+        public void kolejkaBota(Kolor kolor){
+            koniecTury();
         }
 
         public synchronized MyScene getScene() {
