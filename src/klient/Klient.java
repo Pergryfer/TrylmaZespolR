@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Kolor;
 import sample.MyScene;
+import sample.Pionek;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -33,6 +34,9 @@ public class Klient extends Application implements Serializable {
     static ArrayList<ArrayList> listaPionkow;
     private static OknoPlanszy oknoPlanszy;
     static Scene scene;
+    static Kolor twojKolor = null;
+    static int poRuchu = 0;
+    static boolean wygrales = false;
 
     //   static ArrayList<MyPane> pola = new ArrayList<MyPane>();
 //    static ArrayList<HBox> lista = new ArrayList<HBox>();
@@ -125,16 +129,19 @@ public class Klient extends Application implements Serializable {
                     System.out.println(i);
                 }
 
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        stage = (Stage)instancjaScenyCzekania().getWindow();
-                        scene.setRoot(oknoPlanszy.pane);
-                        stage.setScene(scene);
-                        stage.show();
-                    }
-                });
+                if(wygrales) {
+                    Klient.koniecTury();
+                } else {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            stage = (Stage) instancjaScenyCzekania().getWindow();
+                            scene.setRoot(oknoPlanszy.pane);
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                    });
+                }
 
 
                 return "Array dostarczony";
@@ -151,15 +158,16 @@ public class Klient extends Application implements Serializable {
             } else if (odpowiedz instanceof Kolor) {
                 Kolor kolor = (Kolor) odpowiedz;
 
+                if (kolor == twojKolor) {
+                    wygrales = true;
+                }
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("KONIEC GRY");
                 alert.setHeaderText(null);
                 alert.setContentText("Wygrał gracz z kolorem : "+ kolor.toString());
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK) {
-                    System.exit(0);
-                }
+                alert.showAndWait();
 
                 return "koniec";
 
@@ -177,6 +185,10 @@ public class Klient extends Application implements Serializable {
             if(wyslijWiadomosc("ruch" + " " + rzad1 + " " + kol1 + " " + rzad2 + " " + kol2 + " " + kolor.toString()).equals("poprawny")) {
                 PlanszaKlient.pola[rzad2][kol2] = PlanszaKlient.pola[rzad1][kol1];
                 PlanszaKlient.pola[rzad1][kol1] = 0;
+                if (twojKolor == null && poRuchu != 0) {
+                    twojKolor = Pionek.ostatniRuszony.getKolor();
+                }
+                poRuchu++;
                 return true;
             }else{
                 return false;

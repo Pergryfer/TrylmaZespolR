@@ -521,6 +521,7 @@ public class MyPane extends Pane {
                         this.getChildren().add(pion);
                         pion.setCenterX(this.getCenterX());
                         pion.setCenterY(this.getCenterY());
+                        Pionek.ostatniRuszony = pion;
                     }
 //                }
             }

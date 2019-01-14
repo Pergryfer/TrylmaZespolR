@@ -7,6 +7,7 @@ public class Pionek extends Circle{
     public int x;
     public int y;
     public static int kliknietyPionek;
+    public static Pionek ostatniRuszony;
     Kolor kolor;
 
 

@@ -95,30 +95,35 @@ public class Serwer {
                         if(!gry.get(i).czyPelnaGra()){
                             gry.get(i).dolacz(this);
                             indexGry = i;
-                            indexGracza = gry.get(i).getWszyscyGracze()-1;
+                            if (gry.get(indexGry).ktoWyszedl.size() != 0){
+                                indexGracza = gry.get(indexGry).ktoWyszedl.get(0);
+                                gry.get(indexGry).ktoWyszedl.remove(0);
+                            } else {
+                                indexGracza = gry.get(i).aktualnaLiczbaGraczy - 1;
+                            }
                             System.out.println(indexGracza);
                             int iloscGraczy = gry.get(i).getWszyscyGracze();
                             if( iloscGraczy == 2 ){
                                 kolorGracza = Kolor.BLEKITNY;
                             } else if(iloscGraczy == 4){
                                 if(indexGracza == 1){
-                                    kolorGracza = Kolor.NIEBIESKI;
+                                    kolorGracza = Kolor.ROZOWY;
                                 } else if(indexGracza == 2){
                                     kolorGracza = Kolor.BLEKITNY;
                                 } else if(indexGracza == 3){
-                                    kolorGracza = Kolor.ROZOWY;
+                                    kolorGracza = Kolor.NIEBIESKI;
                                 }
                             } else if(iloscGraczy == 6){
                                 if(indexGracza == 1){
-                                    kolorGracza = Kolor.NIEBIESKI;
+                                    kolorGracza = Kolor.ZOLTY;
                                 } else if(indexGracza == 2){
-                                    kolorGracza = Kolor.ZIELONY;
+                                    kolorGracza = Kolor.ROZOWY;
                                 } else if(indexGracza == 3){
                                     kolorGracza = Kolor.BLEKITNY;
                                 } else if(indexGracza == 4){
-                                    kolorGracza = Kolor.ROZOWY;
+                                    kolorGracza = Kolor.ZIELONY;
                                 } else if(indexGracza == 5){
-                                    kolorGracza = Kolor.ZOLTY;
+                                    kolorGracza = Kolor.NIEBIESKI;
                                 }
                             }
                             return "dolaczono";
@@ -171,9 +176,6 @@ public class Serwer {
                             if(odpowiedz.equals("wyslijArray")){
 
 
-                                System.out.println("aktualna liczba graczy :" + gry.get(indexGry).getAktualnaLiczbaGraczy());
-
-                                System.out.println("size : " + gry.get(indexGry).gracze.size());
 
 
                                 out.writeObject(gry.get(indexGry).getListaPionkow());
@@ -229,81 +231,94 @@ public class Serwer {
             klienci.remove(this);
         }
 
-        private synchronized Kolor czyKoniec(){
+        private synchronized Kolor czyKoniec() {
             int czerwone = 0, blekitne = 0, rozowe = 0, niebieskie = 0, zolte = 0, zielone = 0;
+            if (!gry.get(indexGry).blekitnyKoniec) {
 
-            for(int i = 0; i < 4; i++) {
-                for(int j = 9; j < 16; j++){
-                    if(gry.get(indexGry).listaPionkow.get(i).get(j) > 19 && gry.get(indexGry).listaPionkow.get(i).get(j) < 30){
-                        blekitne++;
-                    }
-                }
-            }
-            if (blekitne == 10) {
-                return Kolor.BLEKITNY;
-            }
-
-            for (int i = 13; i < 17; i++){
-                for (int j = 9; j < 16; j++){
-                    if(gry.get(indexGry).listaPionkow.get(i).get(j) > 9 && gry.get(indexGry).listaPionkow.get(i).get(j) < 20){
-                        czerwone++;
-                    }
-                }
-            }
-            if (czerwone == 10) {
-                return Kolor.CZERWONY;
-            }
-
-            if(gry.get(indexGry).gracze.size() > 2) {
-                for (int i = 4; i < 8; i++) {
-                    for(int j = 0; j < 7; j++) {
-                        if (gry.get(indexGry).listaPionkow.get(i).get(j) > 39 && gry.get(indexGry).listaPionkow.get(i).get(j) < 50) {
-                            rozowe++;
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 9; j < 16; j++) {
+                        if (gry.get(indexGry).listaPionkow.get(i).get(j) > 19 && gry.get(indexGry).listaPionkow.get(i).get(j) < 30) {
+                            blekitne++;
                         }
                     }
                 }
-                if (rozowe == 10){
-                    return Kolor.ROZOWY;
-                }
-
-                for (int i = 9; i < 13; i++) {
-                    for (int j = 18; j < 25; j++) {
-                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 29 && gry.get(indexGry).listaPionkow.get(i).get(j) < 40){
-                            niebieskie++;
-                        }
-                    }
-                }
-                if (niebieskie == 10) {
-                    return Kolor.NIEBIESKI;
+                if (blekitne == 10) {
+                    gry.get(indexGry).setKoniec(Kolor.BLEKITNY);
+                    return Kolor.BLEKITNY;
                 }
             }
 
-            if (gry.get(indexGry).gracze.size() > 4) {
-                for (int i = 4; i < 8; i++) {
-                    for (int j = 18; j < 25; j++) {
-                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 59 && gry.get(indexGry).listaPionkow.get(i).get(j) < 70){
-                            zielone++;
+            if(!gry.get(indexGry).czerwonyKoniec) {
+                for (int i = 13; i < 17; i++) {
+                    for (int j = 9; j < 16; j++) {
+                        if (gry.get(indexGry).listaPionkow.get(i).get(j) > 9 && gry.get(indexGry).listaPionkow.get(i).get(j) < 20) {
+                            czerwone++;
                         }
                     }
                 }
-                if (zielone == 10) {
-                    return Kolor.ZIELONY;
-                }
-
-                for (int i = 9; i < 13; i++) {
-                    for (int j = 0; j < 7; j++) {
-                        if(gry.get(indexGry).listaPionkow.get(i).get(j) > 49 && gry.get(indexGry).listaPionkow.get(i).get(j) < 60){
-                            zolte++;
-                        }
-                    }
-                }
-                if (zolte == 0) {
-                    return Kolor.ZOLTY;
+                if (czerwone == 10) {
+                    gry.get(indexGry).setKoniec(Kolor.CZERWONY);
+                    return Kolor.CZERWONY;
                 }
             }
 
+            if(gry.get(indexGry).getAktualnaLiczbaGraczy() > 2) {
+                if (!gry.get(indexGry).rozowyKoniec) {
+                    for (int i = 4; i < 8; i++) {
+                        for (int j = 0; j < 7; j++) {
+                            if (gry.get(indexGry).listaPionkow.get(i).get(j) > 39 && gry.get(indexGry).listaPionkow.get(i).get(j) < 50) {
+                                rozowe++;
+                            }
+                        }
+                    }
+                    if (rozowe == 10) {
+                        gry.get(indexGry).setKoniec(Kolor.ROZOWY);
+                        return Kolor.ROZOWY;
+                    }
+                }
+                if (!gry.get(indexGry).niebieskiKoniec) {
+                    for (int i = 9; i < 13; i++) {
+                        for (int j = 18; j < 25; j++) {
+                            if (gry.get(indexGry).listaPionkow.get(i).get(j) > 29 && gry.get(indexGry).listaPionkow.get(i).get(j) < 40) {
+                                niebieskie++;
+                            }
+                        }
+                    }
+                    if (niebieskie == 10) {
+                        gry.get(indexGry).setKoniec(Kolor.NIEBIESKI);
+                        return Kolor.NIEBIESKI;
+                    }
+                }
+            }
 
-
+            if (gry.get(indexGry).aktualnaLiczbaGraczy > 4) {
+                if (!gry.get(indexGry).zielonyKoniec) {
+                    for (int i = 4; i < 8; i++) {
+                        for (int j = 18; j < 25; j++) {
+                            if (gry.get(indexGry).listaPionkow.get(i).get(j) > 59 && gry.get(indexGry).listaPionkow.get(i).get(j) < 70) {
+                                zielone++;
+                            }
+                        }
+                    }
+                    if (zielone == 10) {
+                        gry.get(indexGry).setKoniec(Kolor.ZIELONY);
+                        return Kolor.ZIELONY;
+                    }
+                }
+                if (!gry.get(indexGry).zoltyKoniec) {
+                    for (int i = 9; i < 13; i++) {
+                        for (int j = 0; j < 7; j++) {
+                            if (gry.get(indexGry).listaPionkow.get(i).get(j) > 49 && gry.get(indexGry).listaPionkow.get(i).get(j) < 60) {
+                                zolte++;
+                            }
+                        }
+                    }
+                    if (zolte == 10) {
+                        gry.get(indexGry).setKoniec(Kolor.ZOLTY);
+                        return Kolor.ZOLTY;
+                    }
+                }
+            }
             return null;
         }
     }
@@ -324,6 +339,7 @@ public class Serwer {
         boolean niebieskiKoniec = false;
         boolean zoltyKoniec = false;
         boolean zielonyKoniec = false;
+        ArrayList<Integer> ktoWyszedl;
 
 
         public Rozgrywka(int lGraczy, int lBotow) {
@@ -331,6 +347,7 @@ public class Serwer {
             this.lBotow = lBotow;
             this.plansza = new PlanszaGwiazda(lGraczy + lBotow);
             this.aktualnaLiczbaGraczy = 1;
+            ktoWyszedl = new ArrayList<>();
 
             //tworzenie botow
             if(lBotow != 0) {
@@ -418,8 +435,12 @@ public class Serwer {
         }
 
         public synchronized void opuscRozgrywke(KlientWatek klient){
+            ktoWyszedl.add(klient.indexGracza);
             gracze.remove(klient);
             aktualnaLiczbaGraczy--;
+            if (gracze.size() == 0) {
+                gry.remove(this);
+            }
         }
 
         public synchronized void dolacz(KlientWatek klient){
@@ -429,7 +450,7 @@ public class Serwer {
 
         //bot
 
-        public void kolejkaBota(Kolor kolor){
+        public synchronized void kolejkaBota(Kolor kolor){
             koniecTury();
         }
 
@@ -462,7 +483,7 @@ public class Serwer {
             }
         }
 
-        public void setKoniec(Kolor k){
+        public synchronized void setKoniec(Kolor k){
             if (k == Kolor.CZERWONY) {
                 czerwonyKoniec = true;
             } else if (k == Kolor.BLEKITNY) {
@@ -476,30 +497,6 @@ public class Serwer {
             } else if (k == Kolor.ZIELONY) {
                 zielonyKoniec = true;
             }
-        }
-
-        public boolean isCzerwonyKoniec() {
-            return czerwonyKoniec;
-        }
-
-        public boolean isBlekitnyKoniec() {
-            return blekitnyKoniec;
-        }
-
-        public boolean isRozowyKoniec() {
-            return rozowyKoniec;
-        }
-
-        public boolean isNiebieskiKoniec() {
-            return niebieskiKoniec;
-        }
-
-        public boolean isZoltyKoniec() {
-            return zoltyKoniec;
-        }
-
-        public boolean isZielonyKoniec() {
-            return zielonyKoniec;
         }
     }
 
